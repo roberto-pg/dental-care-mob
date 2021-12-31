@@ -1,0 +1,43 @@
+name: dental_care_mob
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  build_runner: ^2.1.5
+  flutter_modular: ^4.3.0
+  mobx: ^2.0.5
+  flutter_mobx: ^2.0.2
+  flutter_secure_storage: ^5.0.2
+  dio: ^4.0.4
+  equatable: ^2.0.3
+  asuka: ^2.0.0
+  flutter_dotenv: ^5.0.2
+  connectivity_plus: ^2.1.0
+  validatorless: ^1.2.1
+  http_parser: ^4.0.0
+  google_fonts: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+  mobx_codegen: ^2.0.4
+  modular_test: ^1.0.1+1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env
+    - lib/assets/images/category/
+    - lib/assets/onBoardDoc.png
+    - lib/assets/images/docinfo/bg1.png
+    - lib/assets/images/back.png
+    
