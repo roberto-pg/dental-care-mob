@@ -9,6 +9,51 @@ part of 'appointment_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppointmentStore on AppointmentStoreBase, Store {
+  final _$_userByIdAtom = Atom(name: 'AppointmentStoreBase._userById');
+
+  @override
+  ObservableFuture<AppointmentUserModel>? get _userById {
+    _$_userByIdAtom.reportRead();
+    return super._userById;
+  }
+
+  @override
+  set _userById(ObservableFuture<AppointmentUserModel>? value) {
+    _$_userByIdAtom.reportWrite(value, super._userById, () {
+      super._userById = value;
+    });
+  }
+
+  final _$userByIdAtom = Atom(name: 'AppointmentStoreBase.userById');
+
+  @override
+  AppointmentUserModel? get userById {
+    _$userByIdAtom.reportRead();
+    return super.userById;
+  }
+
+  @override
+  set userById(AppointmentUserModel? value) {
+    _$userByIdAtom.reportWrite(value, super.userById, () {
+      super.userById = value;
+    });
+  }
+
+  final _$userErrorAtom = Atom(name: 'AppointmentStoreBase.userError');
+
+  @override
+  String? get userError {
+    _$userErrorAtom.reportRead();
+    return super.userError;
+  }
+
+  @override
+  set userError(String? value) {
+    _$userErrorAtom.reportWrite(value, super.userError, () {
+      super.userError = value;
+    });
+  }
+
   final _$_appointmentCreatedAtom =
       Atom(name: 'AppointmentStoreBase._appointmentCreated');
 
@@ -58,6 +103,14 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
     });
   }
 
+  final _$getUserByIdAsyncAction =
+      AsyncAction('AppointmentStoreBase.getUserById');
+
+  @override
+  Future<void> getUserById(String userId) {
+    return _$getUserByIdAsyncAction.run(() => super.getUserById(userId));
+  }
+
   final _$makeAppointmentAsyncAction =
       AsyncAction('AppointmentStoreBase.makeAppointment');
 
@@ -70,6 +123,8 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
   @override
   String toString() {
     return '''
+userById: ${userById},
+userError: ${userError},
 appointmentCreated: ${appointmentCreated},
 errorAppointmentCreated: ${errorAppointmentCreated}
     ''';

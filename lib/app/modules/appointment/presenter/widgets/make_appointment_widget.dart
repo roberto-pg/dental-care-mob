@@ -52,6 +52,7 @@ makeAppointmentWidget(String scheduleId) {
                   }
 
                   if (appointmentStore.appointmentCreated != '') {
+                    String? userId = await appointmentStore.loadUserId();
                     dialogFactory(
                       'Sucesso',
                       'A sua consulta está agendada',
@@ -59,8 +60,7 @@ makeAppointmentWidget(String scheduleId) {
                       'Fechar',
                       () => {},
                       () => [
-                        // Modular.to.pushNamed('/appointment/main'),
-                        // Navigator.of(context, rootNavigator: true).pop()
+                        Modular.to.pushNamed('/appointment/', arguments: userId),
                         Navigator.pop(context),
                         Navigator.pop(context)
                       ],

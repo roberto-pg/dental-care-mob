@@ -1,4 +1,5 @@
 import 'package:dental_care_mob/app/modules/appointment/appointment_module.dart';
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/doctor/doctor_module.dart';
 import 'package:dental_care_mob/app/modules/splash/splash_store.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio.dart';
@@ -25,7 +26,12 @@ class AppModule extends Module {
         Bind.singleton((i) => AppointmentRepositoryImpl(datasource: i())),
         Bind.singleton(
             (i) => MakeAppointmentUseCase(repository: i(), storage: i())),
-        Bind.singleton((i) => AppointmentStore(makeAppointmentUseCase: i())),
+        Bind.singleton((i) => GetUserByIdUseCase(repository: i())),
+        Bind.singleton((i) => AppointmentStore(
+              makeAppointmentUseCase: i(),
+              getUserByIdUseCase: i(),
+              storage: i(),
+            )),
       ];
 
   @override

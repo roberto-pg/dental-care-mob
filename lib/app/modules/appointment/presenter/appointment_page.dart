@@ -1,3 +1,4 @@
+import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,7 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'appointment_store.dart';
 
 class AppointmentPage extends StatefulWidget {
-  const AppointmentPage({Key? key}) : super(key: key);
+  final String userId;
+
+  const AppointmentPage({Key? key, required this.userId}) : super(key: key);
 
   @override
   _AppointmentPageState createState() => _AppointmentPageState();
@@ -15,10 +18,11 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState
     extends ModularState<AppointmentPage, AppointmentStore> {
+  AppointmentUserModel? user;
+
   @override
   void initState() {
-    // loadCpf();
-    // controller.getUserById(widget.userId);
+    store.getUserById(widget.userId);
     super.initState();
   }
 
@@ -95,10 +99,16 @@ class _AppointmentPageState
 
                       // var showUserId = controller.userById;
 
-                      // var status = '';
-                      // showUserId.active == true
-                      //     ? status = 'Ativo'
-                      //     : status = 'Inativo';
+                      if (store.userById == null) {
+                        return Center(child: Text(store.userError ?? ''));
+                      }
+
+                      user = store.userById;
+
+                      var status = '';
+                      user?.active == true
+                          ? status = 'Ativo'
+                          : status = 'Inativo';
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,8 +120,7 @@ class _AppointmentPageState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Teste',
-                                  // showUserId.name,
+                                  user?.name ?? '',
                                   style: GoogleFonts.roboto(
                                       textStyle: const TextStyle(
                                     color: Colors.black54,
@@ -123,8 +132,7 @@ class _AppointmentPageState
                                   height: 5,
                                 ),
                                 Text(
-                                  'Teste',
-                                  // showUserId.plain,
+                                  user?.plan ?? '',
                                   style: GoogleFonts.roboto(
                                       textStyle: const TextStyle(
                                     color: Colors.black45,
@@ -134,8 +142,7 @@ class _AppointmentPageState
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
-                                  'Desativo',
-                                  // status,
+                                  status,
                                   style: GoogleFonts.roboto(
                                       textStyle: const TextStyle(
                                     color: Colors.black45,
@@ -377,10 +384,4 @@ class _AppointmentPageState
   //       });
   // }
 
-  // loadCpf() async {
-  //   await makeAppointmentWidget(
-  //       'dc4c0ab6-4e97-4bb6-b209-fbd197de9982', context);
-  //   // var cpf = await storage.read(key: 'cpf');
-  //   // await controller.getScheByCpf(cpf, true);
-  // }
 }

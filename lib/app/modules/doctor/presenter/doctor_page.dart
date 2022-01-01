@@ -81,236 +81,220 @@ class _DoctorPageState extends ModularState<DoctorPage, DoctorStore> {
                     color: bgColor),
                 child: SingleChildScrollView(
                   child: Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Observer(builder: (_) {
-                        if (store.doctorById == null) {
-                          return Center(child: Text(store.doctorError ?? ''));
-                        }
-                        doctor = store.doctorById;
+                    padding: const EdgeInsets.all(15),
+                    child: Observer(builder: (_) {
+                      if (store.doctorById == null) {
+                        return Center(child: Text(store.doctorError ?? ''));
+                      }
+                      doctor = store.doctorById;
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  height: 75,
-                                  width: 75,
-                                  child: Image.network(doctor?.imageUrl ?? ''),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 15.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(doctor?.name ?? '',
-                                          style: GoogleFonts.roboto(
-                                            textStyle: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )),
-                                      Text(
-                                        doctor?.specialty ?? '',
-                                        style: GoogleFonts.ubuntu(
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                height: 75,
+                                width: 75,
+                                child: Image.network(doctor?.imageUrl ?? ''),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(doctor?.name ?? '',
+                                        style: GoogleFonts.roboto(
                                           textStyle: const TextStyle(
-                                            color: Colors.black87,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w400,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500,
                                           ),
+                                        )),
+                                    Text(
+                                      doctor?.specialty ?? '',
+                                      style: GoogleFonts.ubuntu(
+                                        textStyle: const TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w400,
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 8, right: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Sobre o Doutor',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    )),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    doctor?.bio ?? '',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    'Horários disponíveis',
-                                    style: GoogleFonts.roboto(
-                                        textStyle: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w800,
-                                    )),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.4,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Observer(builder: (_) {
-                                      if (store.schedulesByDoctor == null) {
-                                        return Center(
-                                          child: Text(
-                                              store.errorSchedulesByDoctor ??
-                                                  ''),
-                                        );
-                                      }
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 8, right: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Sobre o Doutor',
+                                  style: GoogleFonts.roboto(
+                                      textStyle: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  )),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  doctor?.bio ?? '',
+                                  style: GoogleFonts.roboto(
+                                      textStyle: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  'Horários disponíveis',
+                                  style: GoogleFonts.roboto(
+                                      textStyle: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                  )),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Observer(builder: (_) {
+                                    if (store.schedulesByDoctor == null) {
+                                      return Center(
+                                        child: Text(
+                                            store.errorSchedulesByDoctor ?? ''),
+                                      );
+                                    }
 
-                                      schedules = store.schedulesByDoctor;
+                                    schedules = store.schedulesByDoctor;
 
-                                      return ListView.builder(
-                                          itemCount: schedules?.length,
-                                          itemBuilder: (context, index) {
-                                            DateTime monthDay = DateTime.parse(
-                                                schedules?[index].monthDay ??
-                                                    '');
+                                    return ListView.builder(
+                                        itemCount: schedules?.length,
+                                        itemBuilder: (context, index) {
+                                          DateTime monthDay = DateTime.parse(
+                                              schedules?[index].monthDay ?? '');
 
-                                            return GestureDetector(
-                                                onTap: () async {
-                                                  String scheduleId =
-                                                      schedules?[index].id ??
-                                                          '';
-                                                  makeAppointmentWidget(
-                                                      scheduleId);
-                                                  // Modular.to.navigate(
-                                                  //     '/appointment/main');
-                                                  // Modular.to.pushNamed(
-                                                  //     '/appointment/make',
-                                                  //     arguments: scheduleId);
-                                                },
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 10),
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20)),
-                                                          color:
-                                                              docContentBgColor),
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            10),
-                                                    child: Row(
+                                          return GestureDetector(
+                                            onTap: () async {
+                                              String scheduleId =
+                                                  schedules?[index].id ?? '';
+                                              makeAppointmentWidget(scheduleId);
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              decoration: const BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(20)),
+                                                  color: docContentBgColor),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                      width: 70,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    10)),
+                                                        color: dateBgColor,
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                              monthDay.day
+                                                                  .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                color:
+                                                                    dateColor,
+                                                                fontSize: 30,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800,
+                                                              )),
+                                                          Text(
+                                                            showMonth(monthDay
+                                                                .month
+                                                                .toString()),
+                                                            style: const TextStyle(
+                                                                color:
+                                                                    dateColor,
+                                                                fontSize: 20,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w800),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Container(
-                                                          width: 70,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10)),
-                                                            color: dateBgColor,
-                                                          ),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                  monthDay.day
-                                                                      .toString(),
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    color:
-                                                                        dateColor,
-                                                                    fontSize:
-                                                                        30,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                  )),
-                                                              Text(
-                                                                showMonth(monthDay
-                                                                    .month
-                                                                    .toString()),
-                                                                style: const TextStyle(
-                                                                    color:
-                                                                        dateColor,
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ),
+                                                        Text(
+                                                            schedules?[index]
+                                                                    .weekDay ??
+                                                                '',
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                            )),
                                                         const SizedBox(
-                                                          width: 10,
+                                                          height: 5,
                                                         ),
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                                schedules?[index]
-                                                                        .weekDay ??
-                                                                    '',
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w800,
-                                                                )),
-                                                            const SizedBox(
-                                                              height: 5,
-                                                            ),
-                                                            Text(
-                                                              schedules?[index]
-                                                                      .hour ??
-                                                                  '',
-                                                              style: const TextStyle(
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600),
-                                                            )
-                                                          ],
+                                                        Text(
+                                                          schedules?[index]
+                                                                  .hour ??
+                                                              '',
+                                                          style: const TextStyle(
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
                                                         )
                                                       ],
-                                                    ),
-                                                  ),
-                                                ));
-                                          });
-                                    }),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        );
-                      })),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                  }),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+                  ),
                 ),
               ),
             ],
