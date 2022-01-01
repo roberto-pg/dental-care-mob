@@ -1,23 +1,13 @@
+import 'package:asuka/asuka.dart' as asuka;
+import 'package:dental_care_mob/app/modules/appointment/presenter/appointment_store.dart';
 import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../appointment_store.dart';
+makeAppointmentWidget(String scheduleId) {
+  final AppointmentStore appointmentStore = Modular.get();
 
-class MakeAppointmentWidget extends StatefulWidget {
-  final String scheduleId;
-
-  const MakeAppointmentWidget({Key? key, required this.scheduleId})
-      : super(key: key);
-
-  @override
-  _MakeAppointmentWidgetState createState() => _MakeAppointmentWidgetState();
-}
-
-class _MakeAppointmentWidgetState
-    extends ModularState<MakeAppointmentWidget, AppointmentStore> {
-  @override
-  Widget build(BuildContext context) {
+  return asuka.showDialog(builder: (BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.green[50],
       title: const Text('Agendamento'),
@@ -33,7 +23,7 @@ class _MakeAppointmentWidgetState
                   primary: const Color(0xFF6200EE),
                 ),
                 onPressed: () {
-                  Modular.to.navigate('/home/');
+                  // Modular.to.navigate('/home/');
                   Navigator.pop(context);
                 },
                 child: const Text('VOLTAR'),
@@ -43,24 +33,25 @@ class _MakeAppointmentWidgetState
                   primary: const Color(0xFF6200EE),
                 ),
                 onPressed: () async {
-                  await store.makeAppointment(widget.scheduleId);
+                  await appointmentStore.makeAppointment(scheduleId);
 
-                  if (store.errorAppointmentCreated != null) {
+                  if (appointmentStore.errorAppointmentCreated != null) {
                     dialogFactory(
                       'Falha na operação',
-                      store.errorAppointmentCreated ?? '',
+                      appointmentStore.errorAppointmentCreated ?? '',
                       '',
                       'Fechar',
                       () => {},
                       () => [
-                        Modular.to.navigate('/home/'),
-                        Navigator.of(context, rootNavigator: true).pop()
+                        // Modular.to.navigate('/home/'),
+                        // Navigator.of(context, rootNavigator: true).pop()
+                        Navigator.pop(context)
                       ],
                     );
                     return;
                   }
 
-                  if (store.appointmentCreated != '') {
+                  if (appointmentStore.appointmentCreated != '') {
                     dialogFactory(
                       'Sucesso',
                       'A sua consulta está agendada',
@@ -68,8 +59,10 @@ class _MakeAppointmentWidgetState
                       'Fechar',
                       () => {},
                       () => [
-                        Modular.to.pushNamed('/appointment/main'),
-                        Navigator.of(context, rootNavigator: true).pop()
+                        // Modular.to.pushNamed('/appointment/main'),
+                        // Navigator.of(context, rootNavigator: true).pop()
+                        Navigator.pop(context),
+                        Navigator.pop(context)
                       ],
                     );
                     return;
@@ -82,5 +75,5 @@ class _MakeAppointmentWidgetState
         )
       ],
     );
-  }
+  });
 }

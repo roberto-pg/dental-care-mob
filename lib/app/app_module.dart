@@ -5,6 +5,10 @@ import 'package:dental_care_mob/shared/dio/custom_dio.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'modules/appointment/domain/usecases/make_appointment_usecase.dart';
+import 'modules/appointment/external/appointment_datasource_impl.dart';
+import 'modules/appointment/infra/repositories/appointment_repository_impl.dart';
+import 'modules/appointment/presenter/appointment_store.dart';
 import 'modules/auth/auth_module.dart';
 import 'modules/home/home_module.dart';
 import 'modules/splash/splash_page.dart';
@@ -16,7 +20,12 @@ class AppModule extends Module {
         Bind.singleton((i) => CustomDio()),
         Bind.singleton((i) => CustomDioAuth(storage: i())),
         Bind.singleton((i) => const FlutterSecureStorage()),
-        Bind.singleton((i) => SplashStore(storage: i()))
+        Bind.singleton((i) => SplashStore(storage: i())),
+        Bind.singleton((i) => AppointmentDatasourceImpl(customDioAuth: i())),
+        Bind.singleton((i) => AppointmentRepositoryImpl(datasource: i())),
+        Bind.singleton(
+            (i) => MakeAppointmentUseCase(repository: i(), storage: i())),
+        Bind.singleton((i) => AppointmentStore(makeAppointmentUseCase: i())),
       ];
 
   @override

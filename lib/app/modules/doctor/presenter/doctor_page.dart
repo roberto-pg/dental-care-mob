@@ -1,3 +1,4 @@
+import 'package:dental_care_mob/app/modules/appointment/presenter/widgets/make_appointment_widget.dart';
 import 'package:dental_care_mob/app/modules/doctor/external/schedule_model.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:dental_care_mob/app/modules/doctor/external/doctor_model.dart';
@@ -189,11 +190,13 @@ class _DoctorPageState extends ModularState<DoctorPage, DoctorStore> {
                                                   String scheduleId =
                                                       schedules?[index].id ??
                                                           '';
-                                                  Modular.to.navigate(
-                                                      '/appointment/main');
-                                                  Modular.to.pushNamed(
-                                                      '/appointment/make',
-                                                      arguments: scheduleId);
+                                                  makeAppointmentWidget(
+                                                      scheduleId);
+                                                  // Modular.to.navigate(
+                                                  //     '/appointment/main');
+                                                  // Modular.to.pushNamed(
+                                                  //     '/appointment/make',
+                                                  //     arguments: scheduleId);
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets.only(
