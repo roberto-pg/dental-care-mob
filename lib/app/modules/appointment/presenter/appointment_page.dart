@@ -81,24 +81,6 @@ class _AppointmentPageState
                   child: Container(
                     padding: const EdgeInsets.all(15),
                     child: Observer(builder: (_) {
-                      // if (controller.userById == null) {
-                      //   return Center(
-                      //       child: Padding(
-                      //     padding: const EdgeInsets.only(top: 40),
-                      //     child: Column(
-                      //       children: const [
-                      //         CircularProgressIndicator(),
-                      //       ],
-                      //     ),
-                      //   ));
-                      // }
-
-                      // if (controller.userById.toString().isEmpty) {
-                      //   return const Center(child: Text('Erro'));
-                      // }
-
-                      // var showUserId = controller.userById;
-
                       if (store.userById == null) {
                         return Center(child: Text(store.userError ?? ''));
                       }
@@ -350,38 +332,4 @@ class _AppointmentPageState
       ),
     );
   }
-
-  // _showConfirmationAlert(int id) {
-  //   String patientName = '';
-  //   String cpf = '';
-  //   String plain = '';
-  //   bool scheduled = false;
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: const Text('Cancelamento'),
-  //           content: const Text('Deseja cancelar a consulta?'),
-  //           actions: [
-  //             ElevatedButton(
-  //               // textColor: const Color(0xFF6200EE),
-  //               onPressed: () {
-  //                 Navigator.pop(context);
-  //               },
-  //               child: const Text('NÃO'),
-  //             ),
-  //             ElevatedButton(
-  //               // textColor: const Color(0xFF6200EE),
-  //               onPressed: () {
-  //                 // Navigator.pop(context);
-  //                 // controller.delScheduling(
-  //                 //     id, patientName, cpf, plain, scheduled, widget.userId);
-  //               },
-  //               child: const Text('SIM'),
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
 }

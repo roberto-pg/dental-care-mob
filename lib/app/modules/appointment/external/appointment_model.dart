@@ -3,12 +3,22 @@ import 'package:dental_care_mob/app/modules/appointment/domain/entities/appointm
 class AppointmentModel extends Appointment {
   const AppointmentModel({
     required String scheduleId,
+    String? doctorName,
+    String? specialty,
+    String? monthDay,
+    String? weekDay,
+    String? hour,
     required String cpf,
     required String plan,
     required bool scheduled,
     required String card,
   }) : super(
           scheduleId: scheduleId,
+          doctorName: doctorName,
+          specialty: specialty,
+          monthDay: monthDay,
+          weekDay: weekDay,
+          hour: hour,
           cpf: cpf,
           plan: plan,
           scheduled: scheduled,
@@ -18,6 +28,11 @@ class AppointmentModel extends Appointment {
   factory AppointmentModel.fromJson(Map<String, dynamic> json) =>
       AppointmentModel(
         scheduleId: json['scheduleId'] ?? '',
+        doctorName: json['doctorName'] ?? '',
+        specialty: json['specialty'] ?? '',
+        monthDay: json['monthDay'] ?? '',
+        weekDay: json['weekDay'] ?? '',
+        hour: json['hour'] ?? '',
         cpf: json['cpf'] ?? '',
         plan: json['plan'] ?? '',
         scheduled: json['scheduled'] ?? '',
@@ -26,6 +41,11 @@ class AppointmentModel extends Appointment {
 
   Map<String, dynamic> toJson() => {
         'scheduleId': scheduleId,
+        'doctorName': doctorName,
+        'specialty': specialty,
+        'monthDay': monthDay,
+        'weekDay': weekDay,
+        'hour': hour,
         'cpf': cpf,
         'plan': plan,
         'scheduled': scheduled,

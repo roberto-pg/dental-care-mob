@@ -47,10 +47,11 @@ class _AccountPageState extends ModularState<AccountPage, AccountStore> {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [getStartedColorStart, getStartedColorEnd],
-                  begin: Alignment(0, -1.15),
-                  end: Alignment(0, 0.1))),
+            gradient: LinearGradient(
+                colors: [getStartedColorStart, getStartedColorEnd],
+                begin: Alignment(0, -1.15),
+                end: Alignment(1, 1)),
+          ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

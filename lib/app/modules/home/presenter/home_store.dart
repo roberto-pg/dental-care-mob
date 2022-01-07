@@ -73,4 +73,9 @@ abstract class HomeStoreBase with Store {
   logoutUser() async {
     await _storage.deleteAll();
   }
+
+  loadUserId() async {
+    String? userId = await _storage.read(key: 'userId');
+    return userId;
+  }
 }

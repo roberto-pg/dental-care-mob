@@ -59,8 +59,10 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           PopupMenuItem(
                             child: InkWell(
                               onTap: () async {
+                                // String? userId = await store.loadUserId();
                                 Navigator.pop(context);
-                                Modular.to.pushNamed('/appointment/main');
+                                // Modular.to.pushNamed('/appointment', arguments: userId);
+                                Modular.to.pushNamed('/appointment/');
                               },
                               // {
                               //   Navigator.pop(context);

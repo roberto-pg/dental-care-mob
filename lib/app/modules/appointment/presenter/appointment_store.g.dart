@@ -103,6 +103,55 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
     });
   }
 
+  final _$_appointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase._appointmentsByCpf');
+
+  @override
+  ObservableFuture<List<AppointmentModel>>? get _appointmentsByCpf {
+    _$_appointmentsByCpfAtom.reportRead();
+    return super._appointmentsByCpf;
+  }
+
+  @override
+  set _appointmentsByCpf(ObservableFuture<List<AppointmentModel>>? value) {
+    _$_appointmentsByCpfAtom.reportWrite(value, super._appointmentsByCpf, () {
+      super._appointmentsByCpf = value;
+    });
+  }
+
+  final _$appointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.appointmentsByCpf');
+
+  @override
+  List<AppointmentModel>? get appointmentsByCpf {
+    _$appointmentsByCpfAtom.reportRead();
+    return super.appointmentsByCpf;
+  }
+
+  @override
+  set appointmentsByCpf(List<AppointmentModel>? value) {
+    _$appointmentsByCpfAtom.reportWrite(value, super.appointmentsByCpf, () {
+      super.appointmentsByCpf = value;
+    });
+  }
+
+  final _$erroAppointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.erroAppointmentsByCpf');
+
+  @override
+  String? get erroAppointmentsByCpf {
+    _$erroAppointmentsByCpfAtom.reportRead();
+    return super.erroAppointmentsByCpf;
+  }
+
+  @override
+  set erroAppointmentsByCpf(String? value) {
+    _$erroAppointmentsByCpfAtom.reportWrite(value, super.erroAppointmentsByCpf,
+        () {
+      super.erroAppointmentsByCpf = value;
+    });
+  }
+
   final _$getUserByIdAsyncAction =
       AsyncAction('AppointmentStoreBase.getUserById');
 
@@ -120,13 +169,24 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
         .run(() => super.makeAppointment(scheduleId));
   }
 
+  final _$getAppointmentsByCpfAsyncAction =
+      AsyncAction('AppointmentStoreBase.getAppointmentsByCpf');
+
+  @override
+  Future<void> getAppointmentsByCpf(String cpf) {
+    return _$getAppointmentsByCpfAsyncAction
+        .run(() => super.getAppointmentsByCpf(cpf));
+  }
+
   @override
   String toString() {
     return '''
 userById: ${userById},
 userError: ${userError},
 appointmentCreated: ${appointmentCreated},
-errorAppointmentCreated: ${errorAppointmentCreated}
+errorAppointmentCreated: ${errorAppointmentCreated},
+appointmentsByCpf: ${appointmentsByCpf},
+erroAppointmentsByCpf: ${erroAppointmentsByCpf}
     ''';
   }
 }

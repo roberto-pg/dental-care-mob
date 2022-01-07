@@ -1,4 +1,5 @@
 import 'package:dental_care_mob/app/modules/appointment/domain/repositories/appointment_repository.dart';
+import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/infra/datasource/appointment_datasource.dart';
 
@@ -19,6 +20,12 @@ class AppointmentRepositoryImpl implements IAppointmentRepository {
   @override
   Future<AppointmentUserModel> getUserByIdRepo(String userId) async {
     var response = await _datasource.getUserByIdData(userId);
+    return response;
+  }
+
+  @override
+  Future<List<AppointmentModel>> getAppointmentByCpfRepo(String cpf) async {
+    var response = await _datasource.getAppointmentByCpfData(cpf);
     return response;
   }
 }

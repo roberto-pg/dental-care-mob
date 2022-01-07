@@ -1,3 +1,4 @@
+import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/infra/datasource/appointment_datasource.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio_auth.dart';
@@ -36,6 +37,25 @@ class AppointmentDatasourceImpl implements IAppointmentDatasource {
     try {
       var response = await _customDioAuth.get('/user-id/$userId');
       return AppointmentUserModel.fromJson(response.data);
+    } on DioError catch (error) {
+      if (error.type.toString() == 'DioErrorType.other') {
+        throw const CustomException('Problema inesperado no servidor');
+      } else {
+        throw CustomException(error.response?.data['Error']);
+      }
+    }
+  }
+
+  @override
+  Future<List<AppointmentModel>> getAppointmentByCpfData(String cpf) async {
+    try {
+      var response = await _customDioAuth
+          .get<List>('/appointments-by-cpf/', queryParameters: {'cpf': cpf});
+      List<AppointmentModel>? appointments = response.data
+          ?.map((appointment) => AppointmentModel.fromJson(appointment))
+          .toList();
+
+      return appointments ?? [];
     } on DioError catch (error) {
       if (error.type.toString() == 'DioErrorType.other') {
         throw const CustomException('Problema inesperado no servidor');

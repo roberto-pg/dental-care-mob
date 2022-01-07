@@ -1,5 +1,7 @@
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointments_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/make_appointment_usecase.dart';
+import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
@@ -11,14 +13,17 @@ class AppointmentStore = AppointmentStoreBase with _$AppointmentStore;
 abstract class AppointmentStoreBase with Store {
   final MakeAppointmentUseCase _makeAppointmentUseCase;
   final GetUserByIdUseCase _getUserByIdUseCase;
+  final GetAppointmentsByCpfUseCase _getAppointmentsByCpfUseCase;
   final FlutterSecureStorage _storage;
 
   AppointmentStoreBase(
       {required MakeAppointmentUseCase makeAppointmentUseCase,
       required GetUserByIdUseCase getUserByIdUseCase,
+      required GetAppointmentsByCpfUseCase getAppointmentsByCpfUseCase,
       required FlutterSecureStorage storage})
       : _makeAppointmentUseCase = makeAppointmentUseCase,
         _getUserByIdUseCase = getUserByIdUseCase,
+        _getAppointmentsByCpfUseCase = getAppointmentsByCpfUseCase,
         _storage = storage;
 
   @observable
@@ -57,6 +62,25 @@ abstract class AppointmentStoreBase with Store {
       appointmentCreated = await _appointmentCreated;
     } catch (error) {
       errorAppointmentCreated = error.toString();
+    }
+  }
+
+  @observable
+  ObservableFuture<List<AppointmentModel>>? _appointmentsByCpf;
+
+  @observable
+  List<AppointmentModel>? appointmentsByCpf;
+
+  @observable
+  String? erroAppointmentsByCpf;
+
+  @action
+  Future<void> getAppointmentsByCpf(String cpf) async {
+    try {
+      _appointmentsByCpf = _getAppointmentsByCpfUseCase.call(cpf).asObservable();
+      appointmentsByCpf = await _appointmentsByCpf;
+    } catch (error) {
+      erroAppointmentsByCpf = error.toString();
     }
   }
 
