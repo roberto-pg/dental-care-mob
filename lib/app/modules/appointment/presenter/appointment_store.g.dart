@@ -103,52 +103,107 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
     });
   }
 
-  final _$_appointmentsByCpfAtom =
-      Atom(name: 'AppointmentStoreBase._appointmentsByCpf');
+  final _$_currentAppointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase._currentAppointmentsByCpf');
 
   @override
-  ObservableFuture<List<AppointmentModel>>? get _appointmentsByCpf {
-    _$_appointmentsByCpfAtom.reportRead();
-    return super._appointmentsByCpf;
+  ObservableFuture<List<AppointmentModel>>? get _currentAppointmentsByCpf {
+    _$_currentAppointmentsByCpfAtom.reportRead();
+    return super._currentAppointmentsByCpf;
   }
 
   @override
-  set _appointmentsByCpf(ObservableFuture<List<AppointmentModel>>? value) {
-    _$_appointmentsByCpfAtom.reportWrite(value, super._appointmentsByCpf, () {
-      super._appointmentsByCpf = value;
+  set _currentAppointmentsByCpf(
+      ObservableFuture<List<AppointmentModel>>? value) {
+    _$_currentAppointmentsByCpfAtom
+        .reportWrite(value, super._currentAppointmentsByCpf, () {
+      super._currentAppointmentsByCpf = value;
     });
   }
 
-  final _$appointmentsByCpfAtom =
-      Atom(name: 'AppointmentStoreBase.appointmentsByCpf');
+  final _$currentAppointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.currentAppointmentsByCpf');
 
   @override
-  List<AppointmentModel>? get appointmentsByCpf {
-    _$appointmentsByCpfAtom.reportRead();
-    return super.appointmentsByCpf;
+  List<AppointmentModel>? get currentAppointmentsByCpf {
+    _$currentAppointmentsByCpfAtom.reportRead();
+    return super.currentAppointmentsByCpf;
   }
 
   @override
-  set appointmentsByCpf(List<AppointmentModel>? value) {
-    _$appointmentsByCpfAtom.reportWrite(value, super.appointmentsByCpf, () {
-      super.appointmentsByCpf = value;
+  set currentAppointmentsByCpf(List<AppointmentModel>? value) {
+    _$currentAppointmentsByCpfAtom
+        .reportWrite(value, super.currentAppointmentsByCpf, () {
+      super.currentAppointmentsByCpf = value;
     });
   }
 
-  final _$erroAppointmentsByCpfAtom =
-      Atom(name: 'AppointmentStoreBase.erroAppointmentsByCpf');
+  final _$erroCurrentAppointmentsByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.erroCurrentAppointmentsByCpf');
 
   @override
-  String? get erroAppointmentsByCpf {
-    _$erroAppointmentsByCpfAtom.reportRead();
-    return super.erroAppointmentsByCpf;
+  String? get erroCurrentAppointmentsByCpf {
+    _$erroCurrentAppointmentsByCpfAtom.reportRead();
+    return super.erroCurrentAppointmentsByCpf;
   }
 
   @override
-  set erroAppointmentsByCpf(String? value) {
-    _$erroAppointmentsByCpfAtom.reportWrite(value, super.erroAppointmentsByCpf,
-        () {
-      super.erroAppointmentsByCpf = value;
+  set erroCurrentAppointmentsByCpf(String? value) {
+    _$erroCurrentAppointmentsByCpfAtom
+        .reportWrite(value, super.erroCurrentAppointmentsByCpf, () {
+      super.erroCurrentAppointmentsByCpf = value;
+    });
+  }
+
+  final _$_appointmentHistoryByCpfAtom =
+      Atom(name: 'AppointmentStoreBase._appointmentHistoryByCpf');
+
+  @override
+  ObservableFuture<List<AppointmentModel>>? get _appointmentHistoryByCpf {
+    _$_appointmentHistoryByCpfAtom.reportRead();
+    return super._appointmentHistoryByCpf;
+  }
+
+  @override
+  set _appointmentHistoryByCpf(
+      ObservableFuture<List<AppointmentModel>>? value) {
+    _$_appointmentHistoryByCpfAtom
+        .reportWrite(value, super._appointmentHistoryByCpf, () {
+      super._appointmentHistoryByCpf = value;
+    });
+  }
+
+  final _$appointmentHistoryByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.appointmentHistoryByCpf');
+
+  @override
+  List<AppointmentModel>? get appointmentHistoryByCpf {
+    _$appointmentHistoryByCpfAtom.reportRead();
+    return super.appointmentHistoryByCpf;
+  }
+
+  @override
+  set appointmentHistoryByCpf(List<AppointmentModel>? value) {
+    _$appointmentHistoryByCpfAtom
+        .reportWrite(value, super.appointmentHistoryByCpf, () {
+      super.appointmentHistoryByCpf = value;
+    });
+  }
+
+  final _$erroAppointmentHistoryByCpfAtom =
+      Atom(name: 'AppointmentStoreBase.erroAppointmentHistoryByCpf');
+
+  @override
+  String? get erroAppointmentHistoryByCpf {
+    _$erroAppointmentHistoryByCpfAtom.reportRead();
+    return super.erroAppointmentHistoryByCpf;
+  }
+
+  @override
+  set erroAppointmentHistoryByCpf(String? value) {
+    _$erroAppointmentHistoryByCpfAtom
+        .reportWrite(value, super.erroAppointmentHistoryByCpf, () {
+      super.erroAppointmentHistoryByCpf = value;
     });
   }
 
@@ -169,13 +224,22 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
         .run(() => super.makeAppointment(scheduleId));
   }
 
-  final _$getAppointmentsByCpfAsyncAction =
-      AsyncAction('AppointmentStoreBase.getAppointmentsByCpf');
+  final _$getCurrentAppointmentsByCpfAsyncAction =
+      AsyncAction('AppointmentStoreBase.getCurrentAppointmentsByCpf');
 
   @override
-  Future<void> getAppointmentsByCpf(String cpf) {
-    return _$getAppointmentsByCpfAsyncAction
-        .run(() => super.getAppointmentsByCpf(cpf));
+  Future<void> getCurrentAppointmentsByCpf(String cpf) {
+    return _$getCurrentAppointmentsByCpfAsyncAction
+        .run(() => super.getCurrentAppointmentsByCpf(cpf));
+  }
+
+  final _$getAppointmentHistoryByCpfAsyncAction =
+      AsyncAction('AppointmentStoreBase.getAppointmentHistoryByCpf');
+
+  @override
+  Future<void> getAppointmentHistoryByCpf(String cpf) {
+    return _$getAppointmentHistoryByCpfAsyncAction
+        .run(() => super.getAppointmentHistoryByCpf(cpf));
   }
 
   @override
@@ -185,8 +249,10 @@ userById: ${userById},
 userError: ${userError},
 appointmentCreated: ${appointmentCreated},
 errorAppointmentCreated: ${errorAppointmentCreated},
-appointmentsByCpf: ${appointmentsByCpf},
-erroAppointmentsByCpf: ${erroAppointmentsByCpf}
+currentAppointmentsByCpf: ${currentAppointmentsByCpf},
+erroCurrentAppointmentsByCpf: ${erroCurrentAppointmentsByCpf},
+appointmentHistoryByCpf: ${appointmentHistoryByCpf},
+erroAppointmentHistoryByCpf: ${erroAppointmentHistoryByCpf}
     ''';
   }
 }

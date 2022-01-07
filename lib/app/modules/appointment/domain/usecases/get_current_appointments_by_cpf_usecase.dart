@@ -1,10 +1,10 @@
 import 'package:dental_care_mob/app/modules/appointment/domain/repositories/appointment_repository.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 
-class GetAppointmentsByCpfUseCase {
+class GetCurrentAppointmentsByCpfUseCase {
   final IAppointmentRepository _repository;
 
-  GetAppointmentsByCpfUseCase({required IAppointmentRepository repository})
+  GetCurrentAppointmentsByCpfUseCase({required IAppointmentRepository repository})
       : _repository = repository;
 
   Future<List<AppointmentModel>> call(String cpf) async {

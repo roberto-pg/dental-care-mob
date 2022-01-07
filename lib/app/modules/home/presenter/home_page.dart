@@ -59,17 +59,12 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                           PopupMenuItem(
                             child: InkWell(
                               onTap: () async {
-                                // String? userId = await store.loadUserId();
+                                String? userId = await store.loadUserId();
+                                String? userCpf = await store.loadUserCpf();
                                 Navigator.pop(context);
-                                // Modular.to.pushNamed('/appointment', arguments: userId);
-                                Modular.to.pushNamed('/appointment/');
+                                Modular.to.pushNamed('/appointment',
+                                    arguments: [userId, userCpf]);
                               },
-                              // {
-                              //   Navigator.pop(context);
-                              //   var userId = await storage.read(key: 'userId');
-                              //   Modular.to.pushNamed('/user',
-                              //       arguments: int.parse(userId));
-                              // },
                               child: Row(
                                 children: const [
                                   Icon(
@@ -93,7 +88,7 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                             child: InkWell(
                               onTap: () async {
                                 Navigator.pop(context);
-                                String? userId = await store.getUserId();
+                                String? userId = await store.loadUserId();
                                 Modular.to.pushNamed('/user/account',
                                     arguments: userId);
                               },

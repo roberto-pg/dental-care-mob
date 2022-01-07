@@ -60,22 +60,20 @@ abstract class HomeStoreBase with Store {
     }
   }
 
-  @observable
-  String? userId;
-
-  @action
-  getUserId() async {
-    userId = await _storage.read(key: 'userId').asObservable();
-    return userId;
-  }
-
   @action
   logoutUser() async {
     await _storage.deleteAll();
   }
 
+  @action
   loadUserId() async {
     String? userId = await _storage.read(key: 'userId');
     return userId;
+  }
+
+  @action
+  loadUserCpf() async {
+    String? userCpf = await _storage.read(key: 'cpf');
+    return userCpf;
   }
 }

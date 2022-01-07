@@ -103,21 +103,6 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
-  final _$userIdAtom = Atom(name: 'HomeStoreBase.userId');
-
-  @override
-  String? get userId {
-    _$userIdAtom.reportRead();
-    return super.userId;
-  }
-
-  @override
-  set userId(String? value) {
-    _$userIdAtom.reportWrite(value, super.userId, () {
-      super.userId = value;
-    });
-  }
-
   final _$getDoctorsAsyncAction = AsyncAction('HomeStoreBase.getDoctors');
 
   @override
@@ -134,18 +119,25 @@ mixin _$HomeStore on HomeStoreBase, Store {
         .run(() => super.getDoctorsBySpecialty(specialty));
   }
 
-  final _$getUserIdAsyncAction = AsyncAction('HomeStoreBase.getUserId');
-
-  @override
-  Future getUserId() {
-    return _$getUserIdAsyncAction.run(() => super.getUserId());
-  }
-
   final _$logoutUserAsyncAction = AsyncAction('HomeStoreBase.logoutUser');
 
   @override
   Future logoutUser() {
     return _$logoutUserAsyncAction.run(() => super.logoutUser());
+  }
+
+  final _$loadUserIdAsyncAction = AsyncAction('HomeStoreBase.loadUserId');
+
+  @override
+  Future loadUserId() {
+    return _$loadUserIdAsyncAction.run(() => super.loadUserId());
+  }
+
+  final _$loadUserCpfAsyncAction = AsyncAction('HomeStoreBase.loadUserCpf');
+
+  @override
+  Future loadUserCpf() {
+    return _$loadUserCpfAsyncAction.run(() => super.loadUserCpf());
   }
 
   @override
@@ -154,8 +146,7 @@ mixin _$HomeStore on HomeStoreBase, Store {
 doctors: ${doctors},
 erroDoctors: ${erroDoctors},
 doctorsBySpecialty: ${doctorsBySpecialty},
-erroDoctorsByEspecialty: ${erroDoctorsByEspecialty},
-userId: ${userId}
+erroDoctorsByEspecialty: ${erroDoctorsByEspecialty}
     ''';
   }
 }

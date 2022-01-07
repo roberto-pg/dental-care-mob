@@ -1,5 +1,5 @@
 import 'package:dental_care_mob/app/modules/appointment/appointment_module.dart';
-import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointments_by_cpf_usecase.dart';
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointment_history_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/doctor/doctor_module.dart';
 import 'package:dental_care_mob/app/modules/splash/splash_store.dart';
@@ -7,6 +7,7 @@ import 'package:dental_care_mob/shared/dio/custom_dio.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'modules/appointment/domain/usecases/get_current_appointments_by_cpf_usecase.dart';
 import 'modules/appointment/domain/usecases/make_appointment_usecase.dart';
 import 'modules/appointment/external/appointment_datasource_impl.dart';
 import 'modules/appointment/infra/repositories/appointment_repository_impl.dart';
@@ -28,11 +29,15 @@ class AppModule extends Module {
         Bind.singleton(
             (i) => MakeAppointmentUseCase(repository: i(), storage: i())),
         Bind.singleton((i) => GetUserByIdUseCase(repository: i())),
-        Bind.singleton((i) => GetAppointmentsByCpfUseCase(repository: i())),
+        Bind.singleton(
+            (i) => GetCurrentAppointmentsByCpfUseCase(repository: i())),
+        Bind.singleton(
+            (i) => GetAppointmentHistoryByCpfUseCase(repository: i())),
         Bind.singleton((i) => AppointmentStore(
               makeAppointmentUseCase: i(),
               getUserByIdUseCase: i(),
-              getAppointmentsByCpfUseCase: i(),
+              getCurrentAppointmentsByCpfUseCase: i(),
+              getAppointmentHistoryByCpfUseCase: i(),
               storage: i(),
             )),
       ];

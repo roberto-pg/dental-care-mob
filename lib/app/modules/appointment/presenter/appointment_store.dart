@@ -1,4 +1,5 @@
-import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointments_by_cpf_usecase.dart';
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointment_history_by_cpf_usecase.dart';
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_current_appointments_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/make_appointment_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
@@ -13,17 +14,23 @@ class AppointmentStore = AppointmentStoreBase with _$AppointmentStore;
 abstract class AppointmentStoreBase with Store {
   final MakeAppointmentUseCase _makeAppointmentUseCase;
   final GetUserByIdUseCase _getUserByIdUseCase;
-  final GetAppointmentsByCpfUseCase _getAppointmentsByCpfUseCase;
+  final GetCurrentAppointmentsByCpfUseCase _getCurrentAppointmentsByCpfUseCase;
+  final GetAppointmentHistoryByCpfUseCase _getAppointmentHistoryByCpfUseCase;
   final FlutterSecureStorage _storage;
 
   AppointmentStoreBase(
       {required MakeAppointmentUseCase makeAppointmentUseCase,
       required GetUserByIdUseCase getUserByIdUseCase,
-      required GetAppointmentsByCpfUseCase getAppointmentsByCpfUseCase,
+      required GetCurrentAppointmentsByCpfUseCase
+          getCurrentAppointmentsByCpfUseCase,
+      required GetAppointmentHistoryByCpfUseCase
+          getAppointmentHistoryByCpfUseCase,
       required FlutterSecureStorage storage})
       : _makeAppointmentUseCase = makeAppointmentUseCase,
         _getUserByIdUseCase = getUserByIdUseCase,
-        _getAppointmentsByCpfUseCase = getAppointmentsByCpfUseCase,
+        _getCurrentAppointmentsByCpfUseCase =
+            getCurrentAppointmentsByCpfUseCase,
+        _getAppointmentHistoryByCpfUseCase = getAppointmentHistoryByCpfUseCase,
         _storage = storage;
 
   @observable
@@ -66,21 +73,42 @@ abstract class AppointmentStoreBase with Store {
   }
 
   @observable
-  ObservableFuture<List<AppointmentModel>>? _appointmentsByCpf;
+  ObservableFuture<List<AppointmentModel>>? _currentAppointmentsByCpf;
 
   @observable
-  List<AppointmentModel>? appointmentsByCpf;
+  List<AppointmentModel>? currentAppointmentsByCpf;
 
   @observable
-  String? erroAppointmentsByCpf;
+  String? erroCurrentAppointmentsByCpf;
 
   @action
-  Future<void> getAppointmentsByCpf(String cpf) async {
+  Future<void> getCurrentAppointmentsByCpf(String cpf) async {
     try {
-      _appointmentsByCpf = _getAppointmentsByCpfUseCase.call(cpf).asObservable();
-      appointmentsByCpf = await _appointmentsByCpf;
+      _currentAppointmentsByCpf =
+          _getCurrentAppointmentsByCpfUseCase.call(cpf).asObservable();
+      currentAppointmentsByCpf = await _currentAppointmentsByCpf;
     } catch (error) {
-      erroAppointmentsByCpf = error.toString();
+      erroCurrentAppointmentsByCpf = error.toString();
+    }
+  }
+
+  @observable
+  ObservableFuture<List<AppointmentModel>>? _appointmentHistoryByCpf;
+
+  @observable
+  List<AppointmentModel>? appointmentHistoryByCpf;
+
+  @observable
+  String? erroAppointmentHistoryByCpf;
+
+  @action
+  Future<void> getAppointmentHistoryByCpf(String cpf) async {
+    try {
+      _appointmentHistoryByCpf =
+          _getAppointmentHistoryByCpfUseCase.call(cpf).asObservable();
+      appointmentHistoryByCpf = await _appointmentHistoryByCpf;
+    } catch (error) {
+      erroAppointmentHistoryByCpf = error.toString();
     }
   }
 
