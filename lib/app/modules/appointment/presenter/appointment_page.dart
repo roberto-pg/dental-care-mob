@@ -33,92 +33,85 @@ class _AppointmentPageState
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        body: Observer(builder: (_) {
-          if (store.currentAppointmentsByCpf == null) {
-            return Center(
-                child: Text(store.erroCurrentAppointmentsByCpf ?? ''));
-          }
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [getStartedColorStart, getStartedColorEnd],
+              begin: Alignment(0, -1.15),
+              end: Alignment(1, 1)),
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            toolbarHeight: 100,
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            title: const Text('Minhas consultas'),
+            flexibleSpace: const FlexibleSpaceBar(
+                titlePadding: EdgeInsets.only(bottom: 50)),
+            bottom: const TabBar(
+                indicatorColor: Colors.white,
+                indicatorWeight: 5,
+                tabs: [
+                  Tab(text: 'Próximas'),
+                  Tab(text: 'Histórico'),
+                ]),
+          ),
+          body: Observer(builder: (_) {
+            if (store.currentAppointmentsByCpf == null) {
+              return Center(
+                  child: Text(store.erroCurrentAppointmentsByCpf ?? ''));
+            }
 
-          currentAppointments = store.currentAppointmentsByCpf;
-          appointmentHistory = store.appointmentHistoryByCpf;
+            currentAppointments = store.currentAppointmentsByCpf;
+            appointmentHistory = store.appointmentHistoryByCpf;
 
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [getStartedColorStart, getStartedColorEnd],
-                  begin: Alignment(0, -1.15),
-                  end: Alignment(1, 1)),
-            ),
-            child: CustomScrollView(
-              slivers: [
-                const SliverAppBar(
-                  backgroundColor: Colors.transparent,
-                  expandedHeight: 150,
-                  title: Text('Minhas consultas'),
-                  bottom: TabBar(
-                      indicatorColor: Colors.white,
-                      indicatorWeight: 5,
-                      tabs: [
-                        Tab(text: 'Próximas'),
-                        Tab(text: 'Histórico'),
-                      ]),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) => Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, top: 20, right: 50),
-                      child: SizedBox(
-                        height: 150,
-                        child: TabBarView(
-                          children: [
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  side:
-                                      const BorderSide(color: Colors.black38)),
-                              color: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              child: SizedBox(
-                                // height: 100,
-                                child: ListTile(
-                                  title: Text(
-                                    currentAppointments?[index].doctorName ??
-                                        '',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                              ),
+            return TabBarView(
+              children: [
+                ListView.builder(
+                    itemCount: currentAppointments?.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: const BorderSide(color: Colors.black38)),
+                        color: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        child: SizedBox(
+                          height: 150,
+                          child: ListTile(
+                            title: Text(
+                              currentAppointments?[index].doctorName ?? '',
+                              style: const TextStyle(fontSize: 20),
                             ),
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  side:
-                                      const BorderSide(color: Colors.black38)),
-                              color: Colors.transparent,
-                              shadowColor: Colors.transparent,
-                              child: SizedBox(
-                                // height: 100,
-                                child: ListTile(
-                                  title: Text(
-                                    appointmentHistory?[index].doctorName ?? '',
-                                    style: const TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                    childCount: currentAppointments?.length,
-                  ),
-                )
+                      );
+                    }),
+                ListView.builder(
+                    itemCount: appointmentHistory?.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: const BorderSide(color: Colors.black38)),
+                        color: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        child: SizedBox(
+                          height: 150,
+                          child: ListTile(
+                            title: Text(
+                              appointmentHistory?[index].doctorName ?? '',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
               ],
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
