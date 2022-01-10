@@ -10,6 +10,6 @@ class AppointmentModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute('/',
             child: (_, args) =>
-                AppointmentPage(userId: args.data[0], userCpf: args.data[1])),
+                AppointmentPage(userCpf: args.data)),
       ];
 }

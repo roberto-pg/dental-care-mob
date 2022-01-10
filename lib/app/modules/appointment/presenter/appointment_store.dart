@@ -1,10 +1,10 @@
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/cancel_appointment_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointment_history_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_current_appointments_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/make_appointment_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 
 part 'appointment_store.g.dart';
@@ -16,22 +16,22 @@ abstract class AppointmentStoreBase with Store {
   final GetUserByIdUseCase _getUserByIdUseCase;
   final GetCurrentAppointmentsByCpfUseCase _getCurrentAppointmentsByCpfUseCase;
   final GetAppointmentHistoryByCpfUseCase _getAppointmentHistoryByCpfUseCase;
-  final FlutterSecureStorage _storage;
+  final CancelAppointmentUseCase _cancelAppointmentUseCase;
 
-  AppointmentStoreBase(
-      {required MakeAppointmentUseCase makeAppointmentUseCase,
-      required GetUserByIdUseCase getUserByIdUseCase,
-      required GetCurrentAppointmentsByCpfUseCase
-          getCurrentAppointmentsByCpfUseCase,
-      required GetAppointmentHistoryByCpfUseCase
-          getAppointmentHistoryByCpfUseCase,
-      required FlutterSecureStorage storage})
-      : _makeAppointmentUseCase = makeAppointmentUseCase,
+  AppointmentStoreBase({
+    required MakeAppointmentUseCase makeAppointmentUseCase,
+    required GetUserByIdUseCase getUserByIdUseCase,
+    required GetCurrentAppointmentsByCpfUseCase
+        getCurrentAppointmentsByCpfUseCase,
+    required GetAppointmentHistoryByCpfUseCase
+        getAppointmentHistoryByCpfUseCase,
+    required CancelAppointmentUseCase cancelAppointmentUseCase,
+  })  : _makeAppointmentUseCase = makeAppointmentUseCase,
         _getUserByIdUseCase = getUserByIdUseCase,
         _getCurrentAppointmentsByCpfUseCase =
             getCurrentAppointmentsByCpfUseCase,
         _getAppointmentHistoryByCpfUseCase = getAppointmentHistoryByCpfUseCase,
-        _storage = storage;
+        _cancelAppointmentUseCase = cancelAppointmentUseCase;
 
   @observable
   ObservableFuture<AppointmentUserModel>? _userById;
@@ -112,8 +112,36 @@ abstract class AppointmentStoreBase with Store {
     }
   }
 
-  loadUserId() async {
-    String? userId = await _storage.read(key: 'userId');
-    return userId;
+  @observable
+  ObservableFuture<String>? _appointmentCanceled;
+
+  @observable
+  String? appointmentCanceled;
+
+  @observable
+  String? errorAppointmentCanceled;
+
+  @action
+  Future<void> cancelAppointment(
+    String id,
+    String patientName,
+    String cpf,
+    String plan,
+    String card,
+  ) async {
+    try {
+      _appointmentCanceled = _cancelAppointmentUseCase
+          .call(
+            id,
+            patientName,
+            cpf,
+            plan,
+            card,
+          )
+          .asObservable();
+      appointmentCanceled = await _appointmentCanceled;
+    } catch (error) {
+      errorAppointmentCanceled = error.toString();
+    }
   }
 }

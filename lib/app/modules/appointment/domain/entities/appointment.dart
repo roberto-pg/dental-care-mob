@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class Appointment extends Equatable {
-  final String scheduleId;
+  final String id;
   final String? doctorName;
   final String? specialty;
   final String? monthDay;
@@ -15,7 +15,7 @@ class Appointment extends Equatable {
   final bool scheduled;
 
   const Appointment({
-    required this.scheduleId,
+    required this.id,
     this.doctorName,
     this.specialty,
     this.monthDay,
@@ -29,7 +29,7 @@ class Appointment extends Equatable {
 
   @override
   List<Object?> get props => [
-        scheduleId,
+        id,
         doctorName,
         specialty,
         monthDay,
@@ -42,7 +42,7 @@ class Appointment extends Equatable {
       ];
 
   Appointment copyWith({
-    String? scheduleId,
+    String? id,
     String? doctorName,
     String? specialty,
     String? monthDay,
@@ -54,7 +54,7 @@ class Appointment extends Equatable {
     bool? scheduled,
   }) {
     return Appointment(
-      scheduleId: scheduleId ?? this.scheduleId,
+      id: id ?? this.id,
       doctorName: doctorName ?? this.doctorName,
       specialty: specialty ?? this.specialty,
       monthDay: monthDay ?? this.monthDay,

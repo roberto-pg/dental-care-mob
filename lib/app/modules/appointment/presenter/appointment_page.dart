@@ -9,11 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentPage extends StatefulWidget {
-  final String userId;
+  // final String userId;
   final String userCpf;
 
-  const AppointmentPage({Key? key, required this.userId, required this.userCpf})
-      : super(key: key);
+  const AppointmentPage({Key? key, required this.userCpf}) : super(key: key);
 
   @override
   _AppointmentPageState createState() => _AppointmentPageState();
@@ -28,7 +27,6 @@ class _AppointmentPageState
   @override
   void initState() {
     super.initState();
-    // store.getUserById(widget.userId);
     store.getCurrentAppointmentsByCpf(widget.userCpf);
     store.getAppointmentHistoryByCpf(widget.userCpf);
   }
@@ -89,7 +87,18 @@ class _AppointmentPageState
                                     'Você deseja desmarcar a consulta agendada ?',
                                     'Sim',
                                     'Não',
-                                    () => {},
+                                    () async {
+                                      await store.cancelAppointment(
+                                          currentAppointments?[index].id ?? '',
+                                          '',
+                                          '',
+                                          '',
+                                          '');
+                                      await store.getCurrentAppointmentsByCpf(
+                                          widget.userCpf);
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop();
+                                    },
                                     () => Navigator.of(context,
                                             rootNavigator: true)
                                         .pop(),

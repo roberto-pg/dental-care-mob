@@ -191,7 +191,7 @@ class _FormCreateUserWidgetState
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     fixedSize: const Size.fromWidth(150),
-                    primary: Colors.green.shade400,
+                    primary: const Color(0XFF21aeb8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
@@ -248,7 +248,7 @@ class _FormCreateUserWidgetState
                     'Salvar',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.white70,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -259,9 +259,9 @@ class _FormCreateUserWidgetState
                   child: Text(
                     "Voltar",
                     style: GoogleFonts.ubuntu(
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                       fontSize: 18.0,
-                      color: Colors.red[400],
+                      color: Color(0XFF21aeb8),
                       fontWeight: FontWeight.w500,
                     )),
                   ),

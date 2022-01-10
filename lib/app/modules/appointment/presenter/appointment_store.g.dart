@@ -207,6 +207,56 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
     });
   }
 
+  final _$_appointmentCanceledAtom =
+      Atom(name: 'AppointmentStoreBase._appointmentCanceled');
+
+  @override
+  ObservableFuture<String>? get _appointmentCanceled {
+    _$_appointmentCanceledAtom.reportRead();
+    return super._appointmentCanceled;
+  }
+
+  @override
+  set _appointmentCanceled(ObservableFuture<String>? value) {
+    _$_appointmentCanceledAtom.reportWrite(value, super._appointmentCanceled,
+        () {
+      super._appointmentCanceled = value;
+    });
+  }
+
+  final _$appointmentCanceledAtom =
+      Atom(name: 'AppointmentStoreBase.appointmentCanceled');
+
+  @override
+  String? get appointmentCanceled {
+    _$appointmentCanceledAtom.reportRead();
+    return super.appointmentCanceled;
+  }
+
+  @override
+  set appointmentCanceled(String? value) {
+    _$appointmentCanceledAtom.reportWrite(value, super.appointmentCanceled, () {
+      super.appointmentCanceled = value;
+    });
+  }
+
+  final _$errorAppointmentCanceledAtom =
+      Atom(name: 'AppointmentStoreBase.errorAppointmentCanceled');
+
+  @override
+  String? get errorAppointmentCanceled {
+    _$errorAppointmentCanceledAtom.reportRead();
+    return super.errorAppointmentCanceled;
+  }
+
+  @override
+  set errorAppointmentCanceled(String? value) {
+    _$errorAppointmentCanceledAtom
+        .reportWrite(value, super.errorAppointmentCanceled, () {
+      super.errorAppointmentCanceled = value;
+    });
+  }
+
   final _$getUserByIdAsyncAction =
       AsyncAction('AppointmentStoreBase.getUserById');
 
@@ -242,6 +292,16 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
         .run(() => super.getAppointmentHistoryByCpf(cpf));
   }
 
+  final _$cancelAppointmentAsyncAction =
+      AsyncAction('AppointmentStoreBase.cancelAppointment');
+
+  @override
+  Future<void> cancelAppointment(
+      String id, String patientName, String cpf, String plan, String card) {
+    return _$cancelAppointmentAsyncAction
+        .run(() => super.cancelAppointment(id, patientName, cpf, plan, card));
+  }
+
   @override
   String toString() {
     return '''
@@ -252,7 +312,9 @@ errorAppointmentCreated: ${errorAppointmentCreated},
 currentAppointmentsByCpf: ${currentAppointmentsByCpf},
 erroCurrentAppointmentsByCpf: ${erroCurrentAppointmentsByCpf},
 appointmentHistoryByCpf: ${appointmentHistoryByCpf},
-erroAppointmentHistoryByCpf: ${erroAppointmentHistoryByCpf}
+erroAppointmentHistoryByCpf: ${erroAppointmentHistoryByCpf},
+appointmentCanceled: ${appointmentCanceled},
+errorAppointmentCanceled: ${errorAppointmentCanceled}
     ''';
   }
 }

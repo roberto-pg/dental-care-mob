@@ -1,4 +1,5 @@
 import 'package:dental_care_mob/app/modules/appointment/appointment_module.dart';
+import 'package:dental_care_mob/app/modules/appointment/domain/usecases/cancel_appointment_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_appointment_history_by_cpf_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user_by_id_usecase.dart';
 import 'package:dental_care_mob/app/modules/doctor/doctor_module.dart';
@@ -33,12 +34,13 @@ class AppModule extends Module {
             (i) => GetCurrentAppointmentsByCpfUseCase(repository: i())),
         Bind.singleton(
             (i) => GetAppointmentHistoryByCpfUseCase(repository: i())),
+        Bind.singleton((i) => CancelAppointmentUseCase(repository: i())),
         Bind.singleton((i) => AppointmentStore(
               makeAppointmentUseCase: i(),
               getUserByIdUseCase: i(),
               getCurrentAppointmentsByCpfUseCase: i(),
               getAppointmentHistoryByCpfUseCase: i(),
-              storage: i(),
+              cancelAppointmentUseCase: i(),
             )),
       ];
 

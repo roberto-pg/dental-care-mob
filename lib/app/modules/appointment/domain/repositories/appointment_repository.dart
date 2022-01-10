@@ -6,4 +6,13 @@ abstract class IAppointmentRepository {
       String scheduleId, String cpf, String plan, String card, bool scheduled);
   Future<AppointmentUserModel> getUserByIdRepo(String userId);
   Future<List<AppointmentModel>> getAppointmentByCpfRepo(String cpf);
+  Future<String> cancelAppointmentRepo(
+    String id,
+    String patientName,
+    String cpf,
+    String plan,
+    String card,
+    bool scheduled,
+    bool editable,
+  );
 }

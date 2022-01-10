@@ -4,7 +4,7 @@ import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-makeAppointmentWidget(String scheduleId) {
+makeAppointmentWidget(String scheduleId, String doctorId) {
   final AppointmentStore appointmentStore = Modular.get();
 
   return asuka.showDialog(builder: (BuildContext context) {
@@ -23,7 +23,6 @@ makeAppointmentWidget(String scheduleId) {
                   primary: const Color(0xFF6200EE),
                 ),
                 onPressed: () {
-                  // Modular.to.navigate('/home/');
                   Navigator.pop(context);
                 },
                 child: const Text('VOLTAR'),
@@ -42,17 +41,12 @@ makeAppointmentWidget(String scheduleId) {
                       '',
                       'Fechar',
                       () => {},
-                      () => [
-                        // Modular.to.navigate('/home/'),
-                        // Navigator.of(context, rootNavigator: true).pop()
-                        Navigator.pop(context)
-                      ],
+                      () => Navigator.pop(context),
                     );
                     return;
                   }
 
                   if (appointmentStore.appointmentCreated != '') {
-                    String? userId = await appointmentStore.loadUserId();
                     dialogFactory(
                       'Sucesso',
                       'A sua consulta está agendada',
@@ -60,7 +54,8 @@ makeAppointmentWidget(String scheduleId) {
                       'Fechar',
                       () => {},
                       () => [
-                        Modular.to.pushNamed('/appointment/', arguments: userId),
+                        Modular.to.pushNamed('/doctor', arguments: doctorId),
+                        Modular.to.pop(),
                         Navigator.pop(context),
                         Navigator.pop(context)
                       ],

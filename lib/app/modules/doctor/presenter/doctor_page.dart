@@ -186,7 +186,9 @@ class _DoctorPageState extends ModularState<DoctorPage, DoctorStore> {
                                             onTap: () async {
                                               String scheduleId =
                                                   schedules?[index].id ?? '';
-                                              makeAppointmentWidget(scheduleId);
+                                              makeAppointmentWidget(scheduleId, widget.doctorId);
+                                              await store.getSchedulesByDoctor(
+                                                  widget.doctorId);
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.only(

@@ -126,10 +126,9 @@ class _AuthPageState extends ModularState<AuthPage, AuthStore> {
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   fixedSize: const Size.fromWidth(150),
-                                  primary: Colors.blue,
+                                  primary: const Color(0XFF21aeb8),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
+                                      borderRadius: BorderRadius.circular(5)),
                                   padding: const EdgeInsets.only(
                                       top: 15, bottom: 15),
                                 ),
@@ -170,7 +169,7 @@ class _AuthPageState extends ModularState<AuthPage, AuthStore> {
                                   'Entrar',
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Colors.white70,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
@@ -181,9 +180,9 @@ class _AuthPageState extends ModularState<AuthPage, AuthStore> {
                                 child: Text(
                                   "Criar conta",
                                   style: GoogleFonts.ubuntu(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                     fontSize: 16.0,
-                                    color: Colors.red[400],
+                                    color: Color(0XFF21aeb8),
                                     fontWeight: FontWeight.w500,
                                   )),
                                 ),

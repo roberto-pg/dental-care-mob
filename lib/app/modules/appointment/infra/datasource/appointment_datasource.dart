@@ -6,4 +6,13 @@ abstract class IAppointmentDatasource {
       String scheduleId, String cpf, String plan, String card, bool scheduled);
   Future<AppointmentUserModel> getUserByIdData(String userId);
   Future<List<AppointmentModel>> getAppointmentByCpfData(String cpf);
+  Future<String> cancelAppointmentData(
+    String id,
+    String patientName,
+    String cpf,
+    String plan,
+    String card,
+    bool scheduled,
+    bool editable,
+  );
 }

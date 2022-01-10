@@ -28,4 +28,25 @@ class AppointmentRepositoryImpl implements IAppointmentRepository {
     var response = await _datasource.getAppointmentByCpfData(cpf);
     return response;
   }
+
+  @override
+  Future<String> cancelAppointmentRepo(
+      String id,
+      String patientName,
+      String cpf,
+      String plan,
+      String card,
+      bool scheduled,
+      bool editable) async {
+    var response = await _datasource.cancelAppointmentData(
+      id,
+      patientName,
+      cpf,
+      plan,
+      card,
+      scheduled,
+      editable,
+    );
+    return response;
+  }
 }

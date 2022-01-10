@@ -64,4 +64,34 @@ class AppointmentDatasourceImpl implements IAppointmentDatasource {
       }
     }
   }
+
+  @override
+  Future<String> cancelAppointmentData(
+    String id,
+    String patientName,
+    String cpf,
+    String plan,
+    String card,
+    bool scheduled,
+    bool editable,
+  ) async {
+    try {
+      var response = await _customDioAuth.patch('/destroy-appointment', data: {
+        'id': id,
+        'patientName': patientName,
+        'cpf': cpf,
+        'plan': plan,
+        'card': card,
+        'scheduled': scheduled,
+        'editable': editable,
+      });
+      return response.data;
+    } on DioError catch (error) {
+      if (error.type.toString() == 'DioErrorType.other') {
+        throw const CustomException('Problema inesperado no servidor');
+      } else {
+        throw CustomException(error.response?.data['Error']);
+      }
+    }
+  }
 }
