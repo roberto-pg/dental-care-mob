@@ -14,7 +14,7 @@ class CancelAppointmentUseCase {
     String card,
   ) async {
     bool scheduled = false;
-    bool editable = false;
+    bool editable = true;
 
     var response = await _repository.cancelAppointmentRepo(
         id, patientName, cpf, plan, card, scheduled, editable);
