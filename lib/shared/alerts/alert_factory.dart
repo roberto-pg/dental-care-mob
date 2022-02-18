@@ -1,7 +1,7 @@
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:flutter/material.dart';
 
-dialogFactory(
+alertFactory(
   final String title,
   final String content,
   final String confirm,

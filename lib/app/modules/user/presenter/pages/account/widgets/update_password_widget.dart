@@ -1,5 +1,5 @@
 import 'package:dental_care_mob/app/modules/user/external/user_model.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../account_store.dart';
 
 updatePasswordWidget(UserModel? user, [BuildContext? context]) {
-  final AccountStore _accountStore = Modular.get();
+  final AccountStore store = Modular.get();
   String? userId = user?.id;
   final _formKey = GlobalKey<FormState>();
 
@@ -28,9 +28,9 @@ updatePasswordWidget(UserModel? user, [BuildContext? context]) {
                       height: 100,
                       width: 230,
                       child: TextFormField(
-                        onChanged: _accountStore.saveOldPassword,
+                        onChanged: store.saveOldPassword,
                         keyboardType: TextInputType.number,
-                        validator: (text) => _accountStore.validateOldPassword,
+                        validator: (text) => store.validateOldPassword,
                         obscureText: true,
                         decoration: InputDecoration(
                           filled: true,
@@ -53,9 +53,9 @@ updatePasswordWidget(UserModel? user, [BuildContext? context]) {
                       height: 100,
                       width: 230,
                       child: TextFormField(
-                        onChanged: _accountStore.saveNewPassword,
+                        onChanged: store.saveNewPassword,
                         keyboardType: TextInputType.number,
-                        validator: (text) => _accountStore.validateNewPassword,
+                        validator: (text) => store.validateNewPassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -100,26 +100,26 @@ updatePasswordWidget(UserModel? user, [BuildContext? context]) {
 
                               if (formValid) {
                                 _formKey.currentState!.save();
-                                await _accountStore.changePassword(
+                                await store.changePassword(
                                   userId ?? '',
-                                  _accountStore.oldPassword,
-                                  _accountStore.newPassword,
+                                  store.oldPassword,
+                                  store.newPassword,
                                 );
 
-                                if (_accountStore.errorPassword ==
+                                if (store.errorPassword ==
                                         'Senha atual inválida' ||
-                                    _accountStore.errorPassword ==
+                                    store.errorPassword ==
                                         'A nova senha deve ter ao menos 6 caracteres') {
-                                  dialogFactory(
+                                  alertFactory(
                                     'Falha na operação',
-                                    _accountStore.errorPassword ?? '',
+                                    store.errorPassword ?? '',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveOldPassword(''),
-                                      _accountStore.saveNewPassword(''),
-                                      _accountStore.saveErrorPassword(''),
+                                      store.saveOldPassword(''),
+                                      store.saveNewPassword(''),
+                                      store.saveErrorPassword(''),
                                       Navigator.of(context).pop(),
                                       Navigator.of(context).pop(),
                                     ],
@@ -127,17 +127,17 @@ updatePasswordWidget(UserModel? user, [BuildContext? context]) {
                                   return;
                                 }
 
-                                if (_accountStore.alteredPassword != '') {
-                                  dialogFactory(
+                                if (store.alteredPassword != '') {
+                                  alertFactory(
                                     'Sucesso',
                                     'A senha foi alterada',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveOldPassword(''),
-                                      _accountStore.saveNewPassword(''),
-                                      _accountStore.saveAlteredPassword(''),
+                                      store.saveOldPassword(''),
+                                      store.saveNewPassword(''),
+                                      store.saveAlteredPassword(''),
                                       Modular.to.popAndPushNamed(
                                           '/user/account',
                                           arguments: userId),

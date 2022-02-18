@@ -5,6 +5,7 @@ import 'package:dental_care_mob/app/modules/appointment/domain/usecases/get_user
 import 'package:dental_care_mob/app/modules/appointment/domain/usecases/make_appointment_usecase.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_user_model.dart';
+import 'package:dental_care_mob/shared/validators/validator.dart';
 import 'package:mobx/mobx.dart';
 
 part 'appointment_store.g.dart';
@@ -17,6 +18,7 @@ abstract class AppointmentStoreBase with Store {
   final GetCurrentAppointmentsByCpfUseCase _getCurrentAppointmentsByCpfUseCase;
   final GetAppointmentHistoryByCpfUseCase _getAppointmentHistoryByCpfUseCase;
   final CancelAppointmentUseCase _cancelAppointmentUseCase;
+  final IValidator _validate;
 
   AppointmentStoreBase({
     required MakeAppointmentUseCase makeAppointmentUseCase,
@@ -26,12 +28,27 @@ abstract class AppointmentStoreBase with Store {
     required GetAppointmentHistoryByCpfUseCase
         getAppointmentHistoryByCpfUseCase,
     required CancelAppointmentUseCase cancelAppointmentUseCase,
+    required IValidator validate,
   })  : _makeAppointmentUseCase = makeAppointmentUseCase,
         _getUserByIdUseCase = getUserByIdUseCase,
         _getCurrentAppointmentsByCpfUseCase =
             getCurrentAppointmentsByCpfUseCase,
         _getAppointmentHistoryByCpfUseCase = getAppointmentHistoryByCpfUseCase,
-        _cancelAppointmentUseCase = cancelAppointmentUseCase;
+        _cancelAppointmentUseCase = cancelAppointmentUseCase,
+        _validate = validate;
+
+  @observable
+  bool _isTokenExpired = false;
+
+  @observable
+  bool isTokenExpired = false;
+
+  @action
+  expiredToken() async {
+    _isTokenExpired = await _validate.expiredToken();
+    isTokenExpired = _isTokenExpired;
+    return isTokenExpired;
+  }
 
   @observable
   ObservableFuture<AppointmentUserModel>? _userById;

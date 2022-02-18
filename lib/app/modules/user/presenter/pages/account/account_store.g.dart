@@ -38,6 +38,36 @@ mixin _$AccountStore on _AccountStoreBase, Store {
               name: '_AccountStoreBase.validateNewPassword'))
       .value;
 
+  final _$_isTokenExpiredAtom = Atom(name: '_AccountStoreBase._isTokenExpired');
+
+  @override
+  bool get _isTokenExpired {
+    _$_isTokenExpiredAtom.reportRead();
+    return super._isTokenExpired;
+  }
+
+  @override
+  set _isTokenExpired(bool value) {
+    _$_isTokenExpiredAtom.reportWrite(value, super._isTokenExpired, () {
+      super._isTokenExpired = value;
+    });
+  }
+
+  final _$isTokenExpiredAtom = Atom(name: '_AccountStoreBase.isTokenExpired');
+
+  @override
+  bool get isTokenExpired {
+    _$isTokenExpiredAtom.reportRead();
+    return super.isTokenExpired;
+  }
+
+  @override
+  set isTokenExpired(bool value) {
+    _$isTokenExpiredAtom.reportWrite(value, super.isTokenExpired, () {
+      super.isTokenExpired = value;
+    });
+  }
+
   final _$nameAtom = Atom(name: '_AccountStoreBase.name');
 
   @override
@@ -357,6 +387,14 @@ mixin _$AccountStore on _AccountStoreBase, Store {
     });
   }
 
+  final _$expiredTokenAsyncAction =
+      AsyncAction('_AccountStoreBase.expiredToken');
+
+  @override
+  Future expiredToken() {
+    return _$expiredTokenAsyncAction.run(() => super.expiredToken());
+  }
+
   final _$changeNameAsyncAction = AsyncAction('_AccountStoreBase.changeName');
 
   @override
@@ -557,6 +595,7 @@ mixin _$AccountStore on _AccountStoreBase, Store {
   @override
   String toString() {
     return '''
+isTokenExpired: ${isTokenExpired},
 name: ${name},
 alteredName: ${alteredName},
 errorName: ${errorName},

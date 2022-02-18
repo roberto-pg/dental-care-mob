@@ -1,6 +1,7 @@
 import 'package:dental_care_mob/app/modules/home/domain/usecases/get_doctors_by_specialty_usecase.dart';
 import 'package:dental_care_mob/app/modules/home/domain/usecases/get_doctors_usecase.dart';
 import 'package:dental_care_mob/app/modules/home/external/doctor_home_model.dart';
+import 'package:dental_care_mob/shared/validators/validator.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mobx/mobx.dart';
 
@@ -12,14 +13,17 @@ abstract class HomeStoreBase with Store {
   final FlutterSecureStorage _storage;
   final GetDoctorsUsecase _getDoctorsUsecase;
   final GetDoctorsBySpecialtyUsecase _getDoctorsBySpecialtyUsecase;
+  final IValidator _validate;
 
-  HomeStoreBase(
-      {required FlutterSecureStorage storage,
-      required GetDoctorsUsecase getDoctorsUsecase,
-      required GetDoctorsBySpecialtyUsecase getDoctorsBySpecialtyUsecase})
-      : _storage = storage,
+  HomeStoreBase({
+    required FlutterSecureStorage storage,
+    required GetDoctorsUsecase getDoctorsUsecase,
+    required GetDoctorsBySpecialtyUsecase getDoctorsBySpecialtyUsecase,
+    required IValidator validate,
+  })  : _storage = storage,
         _getDoctorsUsecase = getDoctorsUsecase,
-        _getDoctorsBySpecialtyUsecase = getDoctorsBySpecialtyUsecase;
+        _getDoctorsBySpecialtyUsecase = getDoctorsBySpecialtyUsecase,
+        _validate = validate;
 
   @observable
   ObservableFuture<List<DoctorHomeModel>>? _doctors;
@@ -58,6 +62,19 @@ abstract class HomeStoreBase with Store {
     } catch (error) {
       erroDoctorsByEspecialty = error.toString();
     }
+  }
+
+  @observable
+  bool _isTokenExpired = false;
+
+  @observable
+  bool isTokenExpired = false;
+
+  @action
+  expiredToken() async {
+    _isTokenExpired = await _validate.expiredToken();
+    isTokenExpired = _isTokenExpired;
+    return isTokenExpired;
   }
 
   @action

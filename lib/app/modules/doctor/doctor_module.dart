@@ -3,6 +3,7 @@ import 'package:dental_care_mob/app/modules/doctor/domain/usecases/get_schedules
 import 'package:dental_care_mob/app/modules/doctor/infra/repositories/doctor_repository_impl.dart';
 import 'package:dental_care_mob/app/modules/doctor/presenter/doctor_page.dart';
 import 'package:dental_care_mob/app/modules/doctor/presenter/doctor_store.dart';
+import 'package:dental_care_mob/shared/validators/validator_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'external/doctor_datasource_impl.dart';
@@ -14,8 +15,12 @@ class DoctorModule extends Module {
         Bind.lazySingleton((i) => DoctorRepositoryImpl(datasource: i())),
         Bind.lazySingleton((i) => GetDoctorByIdUseCase(repository: i())),
         Bind.lazySingleton((i) => GetSchedulesByDoctorUseCase(repository: i())),
+        Bind.lazySingleton((i) => ValidatorImpl(storage: i())),
         Bind.lazySingleton((i) => DoctorStore(
-            getDoctorByIdUseCase: i(), getSchedulesByDoctorUsecase: i())),
+              getDoctorByIdUseCase: i(),
+              getSchedulesByDoctorUsecase: i(),
+              validate: i(),
+            )),
       ];
 
   @override

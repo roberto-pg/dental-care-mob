@@ -9,6 +9,38 @@ part of 'appointment_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppointmentStore on AppointmentStoreBase, Store {
+  final _$_isTokenExpiredAtom =
+      Atom(name: 'AppointmentStoreBase._isTokenExpired');
+
+  @override
+  bool get _isTokenExpired {
+    _$_isTokenExpiredAtom.reportRead();
+    return super._isTokenExpired;
+  }
+
+  @override
+  set _isTokenExpired(bool value) {
+    _$_isTokenExpiredAtom.reportWrite(value, super._isTokenExpired, () {
+      super._isTokenExpired = value;
+    });
+  }
+
+  final _$isTokenExpiredAtom =
+      Atom(name: 'AppointmentStoreBase.isTokenExpired');
+
+  @override
+  bool get isTokenExpired {
+    _$isTokenExpiredAtom.reportRead();
+    return super.isTokenExpired;
+  }
+
+  @override
+  set isTokenExpired(bool value) {
+    _$isTokenExpiredAtom.reportWrite(value, super.isTokenExpired, () {
+      super.isTokenExpired = value;
+    });
+  }
+
   final _$_userByIdAtom = Atom(name: 'AppointmentStoreBase._userById');
 
   @override
@@ -257,6 +289,14 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
     });
   }
 
+  final _$expiredTokenAsyncAction =
+      AsyncAction('AppointmentStoreBase.expiredToken');
+
+  @override
+  Future expiredToken() {
+    return _$expiredTokenAsyncAction.run(() => super.expiredToken());
+  }
+
   final _$getUserByIdAsyncAction =
       AsyncAction('AppointmentStoreBase.getUserById');
 
@@ -305,6 +345,7 @@ mixin _$AppointmentStore on AppointmentStoreBase, Store {
   @override
   String toString() {
     return '''
+isTokenExpired: ${isTokenExpired},
 userById: ${userById},
 userError: ${userError},
 appointmentCreated: ${appointmentCreated},

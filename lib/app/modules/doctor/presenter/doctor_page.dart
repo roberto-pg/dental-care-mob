@@ -1,5 +1,5 @@
-import 'package:dental_care_mob/app/modules/appointment/presenter/widgets/make_appointment_widget.dart';
 import 'package:dental_care_mob/app/modules/doctor/external/schedule_model.dart';
+import 'package:dental_care_mob/app/modules/doctor/presenter/widgets/appointment_card_widget.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:dental_care_mob/app/modules/doctor/external/doctor_model.dart';
 import 'package:flutter/material.dart';
@@ -51,19 +51,21 @@ class _DoctorPageState extends ModularState<DoctorPage, DoctorStore> {
                 child: Row(
                   children: [
                     Container(
-                        margin: const EdgeInsets.only(
-                            left: 15, top: 20, bottom: 140),
-                        width: 45,
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                              Modular.to.pushReplacementNamed('/home');
-                            },
-                            child: const Icon(
-                              Icons.arrow_back,
-                              size: 30,
-                              color: Colors.white,
-                            ))),
+                      margin:
+                          const EdgeInsets.only(left: 15, top: 20, bottom: 140),
+                      width: 45,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Modular.to.pushReplacementNamed('/home');
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                     Container(
                       padding: const EdgeInsets.only(top: 20, bottom: 20),
                       child: Image.asset('lib/assets/images/docinfo/bg1.png'),
@@ -162,134 +164,7 @@ class _DoctorPageState extends ModularState<DoctorPage, DoctorStore> {
                                 const SizedBox(
                                   height: 5,
                                 ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.4,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Observer(builder: (_) {
-                                    if (store.schedulesByDoctor == null) {
-                                      return Center(
-                                        child: Text(
-                                            store.errorSchedulesByDoctor ?? ''),
-                                      );
-                                    }
-
-                                    schedules = store.schedulesByDoctor;
-
-                                    return ListView.builder(
-                                        itemCount: schedules?.length,
-                                        itemBuilder: (context, index) {
-                                          DateTime monthDay = DateTime.parse(
-                                              schedules?[index].monthDay ?? '');
-
-                                          return GestureDetector(
-                                            onTap: () async {
-                                              String scheduleId =
-                                                  schedules?[index].id ?? '';
-                                              makeAppointmentWidget(scheduleId, widget.doctorId);
-                                              await store.getSchedulesByDoctor(
-                                                  widget.doctorId);
-                                            },
-                                            child: Container(
-                                              margin: const EdgeInsets.only(
-                                                  bottom: 10),
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(20)),
-                                                  color: docContentBgColor),
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                      width: 70,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10)),
-                                                        color: dateBgColor,
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                              monthDay.day
-                                                                  .toString(),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color:
-                                                                    dateColor,
-                                                                fontSize: 30,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                              )),
-                                                          Text(
-                                                            showMonth(monthDay
-                                                                .month
-                                                                .toString()),
-                                                            style: const TextStyle(
-                                                                color:
-                                                                    dateColor,
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            schedules?[index]
-                                                                    .weekDay ??
-                                                                '',
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 20,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w800,
-                                                            )),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                          schedules?[index]
-                                                                  .hour ??
-                                                              '',
-                                                          style: const TextStyle(
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                  }),
-                                ),
+                                AppointmentCardWidget(doctorId: widget.doctorId)
                               ],
                             ),
                           )

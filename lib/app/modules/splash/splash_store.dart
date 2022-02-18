@@ -8,17 +8,12 @@ import 'package:mobx/mobx.dart';
 
 part 'splash_store.g.dart';
 
-
-
-
-
 class SplashStore = _SplashStoreBase with _$SplashStore;
-
 
 abstract class _SplashStoreBase with Store {
   final int splashDuration = 1000;
 
-final FlutterSecureStorage _storage;
+  final FlutterSecureStorage _storage;
   _SplashStoreBase({required FlutterSecureStorage storage})
       : _storage = storage;
 

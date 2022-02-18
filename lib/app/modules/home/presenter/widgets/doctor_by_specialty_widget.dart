@@ -1,9 +1,10 @@
+import 'package:dental_care_mob/app/modules/home/external/doctor_home_model.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-doctorsBySpecialtyDialog(listBySpecialty) {
+doctorsBySpecialtyDialog(List<DoctorHomeModel>? listBySpecialty) {
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -11,7 +12,7 @@ doctorsBySpecialtyDialog(listBySpecialty) {
     // elevation: 0.0,
     backgroundColor: Colors.transparent,
     child: ListView.builder(
-      itemCount: listBySpecialty.length,
+      itemCount: listBySpecialty?.length,
       itemBuilder: (context, index) {
         return Container(
           margin: const EdgeInsets.all(10),
@@ -31,8 +32,7 @@ doctorsBySpecialtyDialog(listBySpecialty) {
                       height: 70,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                              '${listBySpecialty[index].imageUrl}'),
+                          image: NetworkImage(listBySpecialty![index].imageUrl),
                           fit: BoxFit.contain,
                         ),
                       ),

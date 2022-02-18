@@ -5,6 +5,7 @@ import 'package:dental_care_mob/app/modules/user/domain/usecases/get_user_usecas
 import 'package:dental_care_mob/app/modules/user/external/user_datasource_impl.dart';
 import 'package:dental_care_mob/app/modules/user/infra/repositories/user_repository_impl.dart';
 import 'package:dental_care_mob/app/modules/user/presenter/pages/account/account_store.dart';
+import 'package:dental_care_mob/shared/validators/validator_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'domain/usecases/change_email_usecase.dart';
@@ -26,12 +27,14 @@ class UserModule extends Module {
         Bind.singleton((i) => ChangeEmailUseCase(repository: i())),
         Bind.singleton((i) => ChangePasswordUseCase(repository: i())),
         Bind.singleton((i) => ChangePlanAndCardUsecase(repository: i())),
+        Bind.singleton((i) => ValidatorImpl(storage: i())),
         Bind.singleton((i) => AccountStore(
               getUseCase: i(),
               changeNameUseCase: i(),
               changeEmailUseCase: i(),
               changePasswordUseCase: i(),
               changePlanAndCardUsecase: i(),
+              validate: i(),
             )),
       ];
 

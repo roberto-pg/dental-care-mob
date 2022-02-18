@@ -1,4 +1,4 @@
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -131,12 +131,14 @@ class _PlanAndCardUpdateWidgetState
                         onTap: () async {
                           var formValid =
                               _formKey.currentState?.validate() ?? false;
+
                           if (formValid) {
                             _formKey.currentState!.save();
                             await store.changePlanAndCard(
                                 id ?? '', store.plan, store.card);
+
                             if (store.errorPlanAndCard != null) {
-                              dialogFactory(
+                              alertFactory(
                                 'Falha na operaçãooo',
                                 store.errorPlanAndCard ?? '',
                                 '',
@@ -154,7 +156,7 @@ class _PlanAndCardUpdateWidgetState
                             }
 
                             if (store.alteredPlanAndCard != '') {
-                              dialogFactory(
+                              alertFactory(
                                 'Sucesso',
                                 'Dados de convênio atualizados',
                                 '',

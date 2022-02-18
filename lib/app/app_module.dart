@@ -6,6 +6,7 @@ import 'package:dental_care_mob/app/modules/doctor/doctor_module.dart';
 import 'package:dental_care_mob/app/modules/splash/splash_store.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio.dart';
 import 'package:dental_care_mob/shared/dio/custom_dio_auth.dart';
+import 'package:dental_care_mob/shared/validators/validator_impl.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'modules/appointment/domain/usecases/get_current_appointments_by_cpf_usecase.dart';
@@ -22,8 +23,9 @@ class AppModule extends Module {
   @override
   List<Bind> get binds => [
         Bind.singleton((i) => CustomDio()),
-        Bind.singleton((i) => CustomDioAuth(storage: i())),
+        Bind.singleton((i) => CustomDioAuth(storage: i(), validate: i())),
         Bind.singleton((i) => const FlutterSecureStorage()),
+        Bind.singleton((i) => ValidatorImpl(storage: i())),
         Bind.singleton((i) => SplashStore(storage: i())),
         Bind.singleton((i) => AppointmentDatasourceImpl(customDioAuth: i())),
         Bind.singleton((i) => AppointmentRepositoryImpl(datasource: i())),
@@ -35,12 +37,14 @@ class AppModule extends Module {
         Bind.singleton(
             (i) => GetAppointmentHistoryByCpfUseCase(repository: i())),
         Bind.singleton((i) => CancelAppointmentUseCase(repository: i())),
+        Bind.singleton((i) => ValidatorImpl(storage: i())),
         Bind.singleton((i) => AppointmentStore(
               makeAppointmentUseCase: i(),
               getUserByIdUseCase: i(),
               getCurrentAppointmentsByCpfUseCase: i(),
               getAppointmentHistoryByCpfUseCase: i(),
               cancelAppointmentUseCase: i(),
+              validate: i(),
             )),
       ];
 

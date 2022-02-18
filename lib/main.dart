@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dental_care_mob/app/app_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,8 +9,7 @@ Future<void> main() async {
   await dotenv.load();
 
   Modular.to.addListener(() {
-    // ignore: avoid_print
-    print(Modular.to.path);
+    log(Modular.to.path);
   });
 
   runApp(

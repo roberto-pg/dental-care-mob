@@ -1,6 +1,6 @@
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:dental_care_mob/app/modules/appointment/presenter/appointment_store.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -35,7 +35,7 @@ makeAppointmentWidget(String scheduleId, String doctorId) {
                   await appointmentStore.makeAppointment(scheduleId);
 
                   if (appointmentStore.errorAppointmentCreated != null) {
-                    dialogFactory(
+                    alertFactory(
                       'Falha na operação',
                       appointmentStore.errorAppointmentCreated ?? '',
                       '',
@@ -46,8 +46,8 @@ makeAppointmentWidget(String scheduleId, String doctorId) {
                     return;
                   }
 
-                  if (appointmentStore.appointmentCreated != '') {
-                    dialogFactory(
+                  if (appointmentStore.appointmentCreated != null) {
+                    alertFactory(
                       'Sucesso',
                       'A sua consulta está agendada',
                       '',

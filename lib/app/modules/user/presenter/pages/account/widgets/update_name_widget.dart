@@ -1,5 +1,5 @@
 import 'package:dental_care_mob/app/modules/user/external/user_model.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../account_store.dart';
 
 updateNameWidget(UserModel? user, [BuildContext? context]) {
-  final AccountStore _accountStore = Modular.get();
+  final AccountStore store = Modular.get();
   String? userId = user?.id;
   final _formKey = GlobalKey<FormState>();
 
@@ -28,9 +28,9 @@ updateNameWidget(UserModel? user, [BuildContext? context]) {
                       height: 100,
                       width: 230,
                       child: TextFormField(
-                        onChanged: _accountStore.saveName,
+                        onChanged: store.saveName,
                         keyboardType: TextInputType.name,
-                        validator: (text) => _accountStore.validateName,
+                        validator: (text) => store.validateName,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -72,22 +72,23 @@ updateNameWidget(UserModel? user, [BuildContext? context]) {
                             onTap: () async {
                               var formValid =
                                   _formKey.currentState?.validate() ?? false;
+
                               if (formValid) {
                                 _formKey.currentState!.save();
+                                await store.changeName(
+                                    userId ?? '', store.name);
 
-                                await _accountStore.changeName(
-                                    userId ?? '', _accountStore.name);
-                                if (_accountStore.errorName ==
+                                if (store.errorName ==
                                     'O campo de nome só aceita letras') {
-                                  dialogFactory(
+                                  alertFactory(
                                     'Falha na operação',
-                                    _accountStore.errorName ?? '',
+                                    store.errorName ?? '',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveName(''),
-                                      _accountStore.saveErrorName(''),
+                                      store.saveName(''),
+                                      store.saveErrorName(''),
                                       Navigator.of(context).pop(),
                                       Navigator.of(context).pop(),
                                     ],
@@ -95,16 +96,17 @@ updateNameWidget(UserModel? user, [BuildContext? context]) {
 
                                   return;
                                 }
-                                if (_accountStore.alteredName != '') {
-                                  dialogFactory(
+
+                                if (store.alteredName != '') {
+                                  alertFactory(
                                     'Sucesso',
                                     'O nome foi alterado',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveName(''),
-                                      _accountStore.saveAlteredName(''),
+                                      store.saveName(''),
+                                      store.saveAlteredName(''),
                                       Modular.to.popAndPushNamed(
                                           '/user/account',
                                           arguments: userId),

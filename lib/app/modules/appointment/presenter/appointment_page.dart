@@ -1,6 +1,6 @@
 import 'package:dental_care_mob/app/modules/appointment/external/appointment_model.dart';
 import 'package:dental_care_mob/app/modules/appointment/presenter/appointment_store.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -81,28 +81,47 @@ class _AppointmentPageState
                               String day = newFormat.format(monthDay);
 
                               return GestureDetector(
-                                onLongPress: () {
-                                  dialogFactory(
-                                    'Cancelamento de Consulta',
-                                    'Você deseja desmarcar a consulta agendada ?',
-                                    'Sim',
-                                    'Não',
-                                    () async {
-                                      await store.cancelAppointment(
-                                          currentAppointments?[index].id ?? '',
-                                          '',
-                                          '',
-                                          '',
-                                          '');
-                                      await store.getCurrentAppointmentsByCpf(
-                                          widget.userCpf);
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pop();
-                                    },
-                                    () => Navigator.of(context,
-                                            rootNavigator: true)
-                                        .pop(),
-                                  );
+                                onLongPress: () async {
+                                  await store.expiredToken();
+                                  bool validToken = !store.isTokenExpired;
+                                  if (validToken) {
+                                    alertFactory(
+                                      'Cancelamento de Consulta',
+                                      'Você deseja desmarcar a consulta agendada ?',
+                                      'Sim',
+                                      'Não',
+                                      () async {
+                                        await store.cancelAppointment(
+                                            currentAppointments?[index].id ??
+                                                '',
+                                            '',
+                                            '',
+                                            '',
+                                            '');
+                                        await store.getCurrentAppointmentsByCpf(
+                                            widget.userCpf);
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
+                                      },
+                                      () => Navigator.of(context,
+                                              rootNavigator: true)
+                                          .pop(),
+                                    );
+                                  } else {
+                                    alertFactory(
+                                        'Oops',
+                                        'Algo deu errado...\nFaça o login novamente',
+                                        '',
+                                        'Fechar',
+                                        () => {},
+                                        () => {
+                                              Modular.to.navigate('/auth/'),
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop()
+                                            });
+                                  }
                                 },
                                 child: Card(
                                   shape: RoundedRectangleBorder(

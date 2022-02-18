@@ -1,4 +1,5 @@
 import 'package:dental_care_mob/app/modules/user/external/user_model.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'account_store.dart';
 import 'package:flutter/material.dart';
@@ -57,19 +58,20 @@ class _AccountPageState extends ModularState<AccountPage, AccountStore> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin:
-                        const EdgeInsets.only(left: 15, top: 40, bottom: 10),
-                    width: 45,
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Modular.to.navigate('/home/');
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          size: 30,
-                          color: Colors.white,
-                        ))),
+                  margin: const EdgeInsets.only(left: 15, top: 40, bottom: 10),
+                  width: 45,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Modular.to.navigate('/home/');
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
                 Padding(
                   padding:
                       const EdgeInsets.only(top: 10.0, left: 20.0, right: 20.0),
@@ -191,8 +193,26 @@ class _AccountPageState extends ModularState<AccountPage, AccountStore> {
                                 color: Colors.black,
                               ),
                               GestureDetector(
-                                onTap: () {
-                                  showEditDialog(index, user);
+                                onTap: () async {
+                                  await store.expiredToken();
+                                  bool validToken = !store.isTokenExpired;
+
+                                  if (validToken) {
+                                    showEditDialog(index, user);
+                                  } else {
+                                    alertFactory(
+                                        'Oops',
+                                        'Algo deu errado...\nFaça o login novamente',
+                                        '',
+                                        'Fechar',
+                                        () => {},
+                                        () => {
+                                              Modular.to.navigate('/auth/'),
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop()
+                                            });
+                                  }
                                 },
                                 child: ListTile(
                                   title: Text(list[index]),

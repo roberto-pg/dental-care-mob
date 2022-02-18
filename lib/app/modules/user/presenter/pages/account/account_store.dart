@@ -4,6 +4,7 @@ import 'package:dental_care_mob/app/modules/user/domain/usecases/change_password
 import 'package:dental_care_mob/app/modules/user/domain/usecases/change_plan_and_card_usecase.dart';
 import 'package:dental_care_mob/app/modules/user/domain/usecases/get_user_usecase.dart';
 import 'package:dental_care_mob/app/modules/user/external/user_model.dart';
+import 'package:dental_care_mob/shared/validators/validator.dart';
 import 'package:mobx/mobx.dart';
 
 part 'account_store.g.dart';
@@ -16,18 +17,34 @@ abstract class _AccountStoreBase with Store {
   final ChangeEmailUseCase _changeEmailUseCase;
   final ChangePasswordUseCase _changePasswordUseCase;
   final ChangePlanAndCardUsecase _changePlanAndCardUseCase;
+  final IValidator _validate;
 
   _AccountStoreBase(
       {required GetUserUseCase getUseCase,
       required ChangeNameUseCase changeNameUseCase,
       required ChangeEmailUseCase changeEmailUseCase,
       required ChangePasswordUseCase changePasswordUseCase,
-      required ChangePlanAndCardUsecase changePlanAndCardUsecase})
+      required ChangePlanAndCardUsecase changePlanAndCardUsecase,
+      required IValidator validate})
       : _getUseCase = getUseCase,
         _changeNameUseCase = changeNameUseCase,
         _changeEmailUseCase = changeEmailUseCase,
         _changePasswordUseCase = changePasswordUseCase,
-        _changePlanAndCardUseCase = changePlanAndCardUsecase;
+        _changePlanAndCardUseCase = changePlanAndCardUsecase,
+        _validate = validate;
+
+  @observable
+  bool _isTokenExpired = false;
+
+  @observable
+  bool isTokenExpired = false;
+
+  @action
+  expiredToken() async {
+    _isTokenExpired = await _validate.expiredToken();
+    isTokenExpired = _isTokenExpired;
+    return isTokenExpired;
+  }
 
   @observable
   String name = '';

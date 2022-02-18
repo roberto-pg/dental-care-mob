@@ -1,5 +1,5 @@
 import 'package:dental_care_mob/app/modules/user/external/user_model.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../account_store.dart';
 
 updateEmailWidget(UserModel? user, [BuildContext? context]) {
-  final AccountStore _accountStore = Modular.get();
+  final AccountStore store = Modular.get();
   String? userId = user?.id;
   final _formKey = GlobalKey<FormState>();
 
@@ -28,9 +28,9 @@ updateEmailWidget(UserModel? user, [BuildContext? context]) {
                       height: 100,
                       width: 230,
                       child: TextFormField(
-                        onChanged: _accountStore.saveEmail,
+                        onChanged: store.saveEmail,
                         keyboardType: TextInputType.emailAddress,
-                        validator: (text) => _accountStore.validateEmail,
+                        validator: (text) => store.validateEmail,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -42,7 +42,7 @@ updateEmailWidget(UserModel? user, [BuildContext? context]) {
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                           )),
-                          // errorText: _accountStore.validateEmail,
+                          // errorText: store.validateEmail,
                         ),
                       ),
                     ),
@@ -73,26 +73,26 @@ updateEmailWidget(UserModel? user, [BuildContext? context]) {
                             onTap: () async {
                               var formValid =
                                   _formKey.currentState?.validate() ?? false;
+
                               if (formValid) {
                                 _formKey.currentState!.save();
 
-                                await _accountStore.changeEmail(
+                                await store.changeEmail(
                                   userId ?? '',
-                                  _accountStore.email,
+                                  store.email,
                                 );
-                                if (_accountStore.errorEmail ==
-                                        'Email inválido' ||
-                                    _accountStore.errorEmail ==
-                                        'O email já existe') {
-                                  dialogFactory(
+
+                                if (store.errorEmail == 'Email inválido' ||
+                                    store.errorEmail == 'O email já existe') {
+                                  alertFactory(
                                     'Falha na operação',
-                                    _accountStore.errorEmail ?? '',
+                                    store.errorEmail ?? '',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveEmail(''),
-                                      _accountStore.saveErrorEmail(''),
+                                      store.saveEmail(''),
+                                      store.saveErrorEmail(''),
                                       Navigator.of(context).pop(),
                                       Navigator.of(context).pop(),
                                     ],
@@ -100,16 +100,17 @@ updateEmailWidget(UserModel? user, [BuildContext? context]) {
 
                                   return;
                                 }
-                                if (_accountStore.alteredEmail != '') {
-                                  dialogFactory(
+
+                                if (store.alteredEmail != '') {
+                                  alertFactory(
                                     'Sucesso',
                                     'O email foi alterado',
                                     '',
                                     'Fechar',
                                     () => {},
                                     () => [
-                                      _accountStore.saveEmail(''),
-                                      _accountStore.saveAlteredEmail(''),
+                                      store.saveEmail(''),
+                                      store.saveAlteredEmail(''),
                                       Modular.to.popAndPushNamed(
                                           '/user/account',
                                           arguments: userId),

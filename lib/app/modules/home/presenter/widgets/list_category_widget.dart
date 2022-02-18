@@ -1,5 +1,5 @@
 import 'package:dental_care_mob/app/modules/home/presenter/home_store.dart';
-import 'package:dental_care_mob/shared/alerts/dialog_factory.dart';
+import 'package:dental_care_mob/shared/alerts/alert_factory.dart';
 import 'package:dental_care_mob/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -26,22 +26,24 @@ class ListCategoryWidget extends StatelessWidget {
             onTap: () async {
               await store
                   .getDoctorsBySpecialty(categoryList[index]['title'] ?? '');
+              await store.expiredToken();
+              if (!store.isTokenExpired) {
+                if (store.doctorsBySpecialty!.isEmpty) {
+                  return alertFactory(
+                      'Não encontrado',
+                      'Que pena, não estamos atendendo essa especialidade',
+                      '',
+                      'Fechar',
+                      () => {},
+                      () => Navigator.of(context, rootNavigator: true).pop());
+                }
 
-              if (store.doctorsBySpecialty!.isEmpty) {
-                return dialogFactory(
-                    'Não encontrado',
-                    'Que pena, não estamos atendendo essa especialidade',
-                    '',
-                    'Fechar',
-                    () => {},
-                    () => Navigator.of(context, rootNavigator: true).pop());
+                var listBySpecialty = store.doctorsBySpecialty;
+
+                showDialog(
+                    context: context,
+                    builder: (_) => doctorsBySpecialtyDialog(listBySpecialty));
               }
-
-              var listBySpecialty = store.doctorsBySpecialty;
-
-              showDialog(
-                  context: context,
-                  builder: (_) => doctorsBySpecialtyDialog(listBySpecialty));
             },
             child: Column(
               children: [

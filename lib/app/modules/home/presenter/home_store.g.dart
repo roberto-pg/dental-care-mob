@@ -103,6 +103,36 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  final _$_isTokenExpiredAtom = Atom(name: 'HomeStoreBase._isTokenExpired');
+
+  @override
+  bool get _isTokenExpired {
+    _$_isTokenExpiredAtom.reportRead();
+    return super._isTokenExpired;
+  }
+
+  @override
+  set _isTokenExpired(bool value) {
+    _$_isTokenExpiredAtom.reportWrite(value, super._isTokenExpired, () {
+      super._isTokenExpired = value;
+    });
+  }
+
+  final _$isTokenExpiredAtom = Atom(name: 'HomeStoreBase.isTokenExpired');
+
+  @override
+  bool get isTokenExpired {
+    _$isTokenExpiredAtom.reportRead();
+    return super.isTokenExpired;
+  }
+
+  @override
+  set isTokenExpired(bool value) {
+    _$isTokenExpiredAtom.reportWrite(value, super.isTokenExpired, () {
+      super.isTokenExpired = value;
+    });
+  }
+
   final _$getDoctorsAsyncAction = AsyncAction('HomeStoreBase.getDoctors');
 
   @override
@@ -117,6 +147,13 @@ mixin _$HomeStore on HomeStoreBase, Store {
   Future<void> getDoctorsBySpecialty(String specialty) {
     return _$getDoctorsBySpecialtyAsyncAction
         .run(() => super.getDoctorsBySpecialty(specialty));
+  }
+
+  final _$expiredTokenAsyncAction = AsyncAction('HomeStoreBase.expiredToken');
+
+  @override
+  Future expiredToken() {
+    return _$expiredTokenAsyncAction.run(() => super.expiredToken());
   }
 
   final _$logoutUserAsyncAction = AsyncAction('HomeStoreBase.logoutUser');
@@ -146,7 +183,8 @@ mixin _$HomeStore on HomeStoreBase, Store {
 doctors: ${doctors},
 erroDoctors: ${erroDoctors},
 doctorsBySpecialty: ${doctorsBySpecialty},
-erroDoctorsByEspecialty: ${erroDoctorsByEspecialty}
+erroDoctorsByEspecialty: ${erroDoctorsByEspecialty},
+isTokenExpired: ${isTokenExpired}
     ''';
   }
 }
