@@ -1,13 +1,12 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:dental_care_mob/app/app_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app/app_module.dart';
 
 Future<void> main() async {
-  await dotenv.load();
-
+  HttpOverrides.global = MyHttpOverrides();
   Modular.to.addListener(() {
     log(Modular.to.path);
   });
@@ -18,4 +17,13 @@ Future<void> main() async {
       child: const AppWidget(),
     ),
   );
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }

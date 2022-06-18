@@ -2,8 +2,6 @@ import 'package:dental_care_mob/shared/validators/validator.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/native_imp.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../config.dart';
 import 'interceptors/auth_interceptor.dart';
 
 class CustomDioAuth extends DioForNative {
@@ -11,7 +9,7 @@ class CustomDioAuth extends DioForNative {
   final IValidator _validate;
 
   static final _baseOptions = BaseOptions(
-    baseUrl: Config.baseUrl,
+    baseUrl: const String.fromEnvironment('baseUrl'),
     connectTimeout: 20000,
     receiveTimeout: 20000,
   );
